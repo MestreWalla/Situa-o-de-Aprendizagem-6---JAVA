@@ -2,6 +2,7 @@ package View;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -9,9 +10,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
-
-import java.awt.Image;
-import javax.swing.ImageIcon;
 
 public class JanelaPrincipal extends JFrame {
     // criação do tabbedPane para incluir as tabs
