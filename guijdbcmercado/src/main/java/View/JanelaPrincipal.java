@@ -13,7 +13,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-
 public class JanelaPrincipal extends JFrame {
     // criação do tabbedPane para incluir as tabs
     private JTabbedPane jTPane;
@@ -39,7 +38,9 @@ public class JanelaPrincipal extends JFrame {
 
         // Tab02: Cadastro
         ImageIcon iconCadastro = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Cadastro.png");
-        iconCadastro = new ImageIcon(scaledImage);
+        Image imageCadastro = iconCadastro.getImage();
+        Image scaledImageCadastro = imageCadastro.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+        iconCadastro = new ImageIcon(scaledImageCadastro);
 
         CadastroPainel tab2 = new CadastroPainel();
         jTPane.addTab("", iconCadastro, tab2, "Cadastro");
