@@ -1,6 +1,6 @@
 package Model;
 
-public class Funcionarios {
+public class ListaFuncionarios {
     //atributos
     private String nome;
     private String cpf;
@@ -8,7 +8,7 @@ public class Funcionarios {
     private String telefone;
     private String endereco;
     //construtor
-    public Funcionarios(String nome, String cpf, String email, String telefone, String endereco) {
+    public ListaFuncionarios(String nome, String cpf, String email, String telefone, String endereco) {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
