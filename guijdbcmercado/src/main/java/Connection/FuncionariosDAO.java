@@ -22,7 +22,7 @@ public class FuncionariosDAO {
     }
     // criar Tabela
     public void criarTabela(){
-        String sql = "CREATE TABLE IF NOT EXISTS FUNCIONARIOS_MERCADO(NOME VARCHAR(255), CPF VARCHAR (255), EMAIL VARCHAR(255) PRIMARY KEY, TELEFONE VARCHAR(13), ENDERECO VARCHAR (255))";
+        String sql = "CREATE TABLE IF NOT EXISTS FUNCIONARIOS_MERCADO(NOME VARCHAR(255), CPF VARCHAR (255) PRIMARY KEY, EMAIL VARCHAR(255), TELEFONE VARCHAR(13), ENDERECO VARCHAR (255))";
         try (Statement stmt = this.connection.createStatement()){
             stmt.execute(sql);
             System.out.println("tabela criada com sucesso.");
@@ -87,12 +87,37 @@ public class FuncionariosDAO {
     public void atualizar(String nome, String cpf, String email, String telefone, String endereco) {
         PreparedStatement stmt = null;
         // Define a instrução SQL parametrizada para atualizar dados pelo email
-        String sql = "UPDATE FUNCIONARIOS_MERCADO SET NOME = ?, CPF = ?, TELEFONE = ?, ENDERECO = ? WHERE EMAIL = ?";
+        String sql = "UPDATE FUNCIONARIOS_MERCADO SET NOME = ?, EMAIL = ?, TELEFONE = ?, ENDERECO = ? WHERE CPF = ?";
         try {
             stmt = connection.prepareStatement(sql);
-            // email é a chave primaria, não pode ser alterada.
+            // cpf é a chave primaria, não pode ser alterada.
             stmt.setString(1,nome);
+            stmt.setString(2,cpf);
+            stmt.setString(3,email);
+            stmt.setString(4,telefone);
+            stmt.setString(5,endereco);
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Dados atualizados com sucesso");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro ao atualizar dados no banco de dados");
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt);
         }
     }
-
+    // Apagar dados do banco
+    public void apagar (String cpf) {
+        PreparedStatement stmt = null;
+        // Define a instrução SQL parametrizada para apagar dados pelo cpf
+        String sql = "DELETE FROM FUNCIONARIOS_MERCADO WHERE CPF = ?";
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(2,cpf);
+            stmt.executeUpdate(); // Executa a instrução SQL
+            JOptionPane.showMessageDialog(null,"Dado apagado com sucesso");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro ao paagar dados no banco de dados");
+        } finally {
+            ConnectionFactory.closeConnection(connection, stmt);
+        }
+    }
 }
