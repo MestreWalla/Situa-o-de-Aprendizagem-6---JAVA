@@ -5,34 +5,31 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ConnectionFactory {
-    // Atributos
     private static final String url = "jdbc:postgresql://localhost:5432/RedeTrambique";
-    private static final String usuario = "devnoturno"; // Nome do ADM do Banco de Dados
-    private static final String senha = "devdatardeficaatarde"; // Senha do ADM do Banco de Dados
-    // Método para ABRIR uma conexão com o Banco de Dados
+    private static final String usuario = "devnoturno";
+    private static final String senha = "devdatardeficaatarde";
 
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection(url, usuario, senha);
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao obter conexão com o banco de dados");
+            throw new RuntimeException("Erro ao obter conexão com o banco de dados", e);
         }
     }
 
-    // Método para FECHAR a conexão com o banco de dados
     public static void closeConnection(Connection connection) {
         try {
             if (connection != null) {
                 connection.close();
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();// Pesquisar
+            ex.printStackTrace();
         }
     }
 
-    // Método para FECHAR a conexão e o objeto PreparedStatement
     public static void closeConnection(Connection connection, PreparedStatement stmt) {
         closeConnection(connection);
         try {
@@ -44,7 +41,6 @@ public class ConnectionFactory {
         }
     }
 
-    // Método para fechar a conexão, o objeto PreparedStatement e o ResultSet
     public static void closeConnection(Connection connection, PreparedStatement stmt, ResultSet rs) {
         closeConnection(connection, stmt);
         try {
@@ -54,5 +50,26 @@ public class ConnectionFactory {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    // Método para criar o banco de dados caso não exista
+    public static void criarBanco() {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url, usuario, senha);
+            String createDatabaseSQL = "CREATE DATABASE IF NOT EXISTS RedeTrambique";
+            try (Statement stmt = connection.createStatement()) {
+                stmt.execute(createDatabaseSQL);
+                System.out.println("Banco de dados criado com sucesso.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao criar o banco de dados", e);
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
+    public static void main(String[] args) {
+        criarBanco();
     }
 }
