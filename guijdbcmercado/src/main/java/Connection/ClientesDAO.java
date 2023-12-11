@@ -15,7 +15,7 @@ import Model.ListaClientes;
 public class ClientesDAO {
     // atributos
     private Connection connection;
-    private List<ListaClientes> clientes;
+    private List<ListaClientes> produtos;
     // construtor
     public ClientesDAO() {
         this.connection = ConnectionFactory.getConnection();
@@ -32,13 +32,13 @@ public class ClientesDAO {
             ConnectionFactory.closeConnection(this.connection);
         }
     }
-    // Listar todos os valores cadastrados
+    // Listar todos os precoes cadastrados
     public List<ListaClientes> listarTodos(){
         PreparedStatement stmt = null;
         //  Declaração do objeto PreparedStatement para executar a consulta
         ResultSet rs = null;;
         // Declaração do objeto ResultSet para armazenar os resultados da consulta
-        clientes = new ArrayList<>();
+        produtos = new ArrayList<>();
         // Criar uma lista para armazenar os funcioanrios recuperdos do banco de dados
         try {
             String sql = "SELECT *FROM CLIENTES_MERCADO";
@@ -47,21 +47,21 @@ public class ClientesDAO {
             rs = stmt.executeQuery();
             // Executa a consulta e armazena os resultados no ResultSet
             while (rs.next()) {
-                // Para cada registro no ResultSet, cria um objeto cliente com os valores do registro
+                // Para cada registro no ResultSet, cria um objeto cliente com os precoes do registro
                 ListaClientes cliente = new ListaClientes(
                     rs.getString("nome"),
                     rs.getString("cpf"),
                     rs.getString("email"),
                     rs.getString("telefone"),
                     rs.getString("endereco"));
-                clientes.add(cliente); // Adiciona o objeto cliente à lista de Clientes
+                produtos.add(cliente); // Adiciona o objeto cliente à lista de Clientes
             }
         } catch (SQLException ex) {
             System.out.println(ex); // Em caso de erro durante a consulta, imprime o erro
         } finally {
             ConnectionFactory.closeConnection (connection, stmt, rs); // Fecha a conexão, PreparedStatement e o ResultSet
         }
-        return clientes; // Retorna a lista de clientes recuperados do banco de dados
+        return produtos; // Retorna a lista de produtos recuperados do banco de dados
     }
     // Cadastrar Cliente no banco de dados
     public void cadastrar(String nome, String cpf, String email, String telefone, String endereco) {

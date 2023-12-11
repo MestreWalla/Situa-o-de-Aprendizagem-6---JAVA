@@ -32,7 +32,7 @@ public class FuncionariosDAO {
             ConnectionFactory.closeConnection(this.connection);
         }
     }
-    // Listar todos os valores cadastrados
+    // Listar todos os precoes cadastrados
     public List<ListaFuncionarios> listarTodos(){
         PreparedStatement stmt = null;
         //  Declaração do objeto PreparedStatement para executar a consulta
@@ -47,7 +47,7 @@ public class FuncionariosDAO {
             rs = stmt.executeQuery();
             // Executa a consulta e armazena os resultados no ResultSet
             while (rs.next()) {
-                // Para cada registro no ResultSet, cria um objeto funcionario com os valores do registro
+                // Para cada registro no ResultSet, cria um objeto funcionario com os precoes do registro
                 ListaFuncionarios funcionario = new ListaFuncionarios(
                     rs.getString("nome"),
                     rs.getString("cpf"),
