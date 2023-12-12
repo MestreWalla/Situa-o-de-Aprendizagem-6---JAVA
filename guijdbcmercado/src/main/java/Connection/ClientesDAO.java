@@ -22,16 +22,17 @@ public class ClientesDAO {
     }
     // criar Tabela
     public void criarTabela(){
-        String sql = "CREATE TABLE IF NOT EXISTS CLIENTES_MERCADO(NOME VARCHAR(255), CPF VARCHAR (255) PRIMARY KEY, EMAIL VARCHAR(255), TELEFONE VARCHAR(13), ENDERECO VARCHAR (255))";
+        String sql = "CREATE TABLE IF NOT EXISTS CLIENTES_MERCADO (NOME VARCHAR(255), CPF VARCHAR (255) PRIMARY KEY, EMAIL VARCHAR(255), TELEFONE VARCHAR(13), ENDERECO VARCHAR(255))";
         try (Statement stmt = this.connection.createStatement()){
             stmt.execute(sql);
-            System.out.println("tabela criada com sucesso.");
+            System.out.println("Tabela criada com sucesso.");
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao criar a tabela: "+e.getMessage(), e);
+            throw new RuntimeException("Erro ao criar a tabela: " + e.getMessage(), e);
         } finally {
             ConnectionFactory.closeConnection(this.connection);
         }
     }
+    
     // Listar todos os precoes cadastrados
     public List<ListaClientes> listarTodos(){
         PreparedStatement stmt = null;

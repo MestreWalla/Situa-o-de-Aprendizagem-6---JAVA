@@ -26,7 +26,7 @@ public class JanelaPrincipal extends JFrame {
 
         // Criandos as tabs
         // Tab01: Venda
-        ImageIcon iconVendas = new ImageIcon("src\\main\\resources\\Icons\\Carrinho.png");
+        ImageIcon iconVendas = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Carrinho.png");
         Image image = iconVendas.getImage();
         Image scaledImage = image.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconVendas = new ImageIcon(scaledImage);
@@ -35,7 +35,7 @@ public class JanelaPrincipal extends JFrame {
         jTPane.addTab("", iconVendas, tab1, "Vendas");
 
         // Tab02: Cadastro
-        ImageIcon iconCadastro = new ImageIcon("src\\main\\resources\\Icons\\Cadastro.png");
+        ImageIcon iconCadastro = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Cadastro.png");
         Image imageCadastro = iconCadastro.getImage();
         Image scaledImageCadastro = imageCadastro.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconCadastro = new ImageIcon(scaledImageCadastro);
