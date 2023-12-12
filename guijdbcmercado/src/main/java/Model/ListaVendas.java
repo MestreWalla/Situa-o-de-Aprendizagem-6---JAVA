@@ -5,12 +5,14 @@ public class ListaVendas {
     String dataHora;
     double valor;
     boolean vip;
+
     // Contructor
     public ListaVendas(String dataHora, double valor, boolean vip) {
         this.dataHora = dataHora;
         this.valor = valor;
         this.vip = vip;
     }
+    // Getters and Setters
     public String getDataHora() {
         return dataHora;
     }
@@ -23,11 +25,10 @@ public class ListaVendas {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    public boolean isVip() {
+    public boolean getVip() {
         return vip;
     }
     public void setVip(boolean vip) {
         this.vip = vip;
     }
-    
 }
