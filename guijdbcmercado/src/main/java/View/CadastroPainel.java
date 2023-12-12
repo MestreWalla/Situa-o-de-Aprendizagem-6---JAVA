@@ -4,6 +4,11 @@ import Model.ListaClientes;
 import Model.ListaFuncionarios;
 import Connection.ClientesDAO;
 import javax.swing.*;
+
+import Connection.ClientesDAO;
+import Connection.FuncionariosDAO;
+import Controller.ClientesControl;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -172,6 +177,9 @@ public class CadastroPainel extends JPanel {
 
         add(formPanel, BorderLayout.CENTER);
 
+        //Criar as tabelas
+        new ClientesDAO().criarTabela();
+
         // Adiciona listener aos botões de cadastrar
         cadastrarClienteButton.addActionListener(new ActionListener() {
             @Override
@@ -237,8 +245,9 @@ public class CadastroPainel extends JPanel {
         String endereco = enderecoClienteTextField.getText();
 
         // Cria um novo cliente e adiciona à lista
-        ListaClientes novoCliente = new ListaClientes(nome, cpf, email, telefone, endereco);
-        listaClientes.add(novoCliente);
+        new ClientesControl(listaClientes, null, null).cadastrar(nome, cpf, email, telefone, endereco);
+
+
 
         // Limpa os campos do formulário
         nomeClienteTextField.setText("");
