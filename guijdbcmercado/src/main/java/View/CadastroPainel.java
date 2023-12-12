@@ -5,8 +5,6 @@ import Model.ListaFuncionarios;
 import Connection.ClientesDAO;
 import javax.swing.*;
 
-import Connection.ClientesDAO;
-import Connection.FuncionariosDAO;
 import Controller.ClientesControl;
 
 import java.awt.*;
@@ -177,7 +175,7 @@ public class CadastroPainel extends JPanel {
 
         add(formPanel, BorderLayout.CENTER);
 
-        //Criar as tabelas
+        // Criar as tabelas
         new ClientesDAO().criarTabela();
 
         // Adiciona listener aos botões de cadastrar
@@ -247,15 +245,12 @@ public class CadastroPainel extends JPanel {
         // Cria um novo cliente e adiciona à lista
         new ClientesControl(listaClientes, null, null).cadastrar(nome, cpf, email, telefone, endereco);
 
-
-
         // Limpa os campos do formulário
         nomeClienteTextField.setText("");
         cpfClienteTextField.setText("");
         emailClienteTextField.setText("");
         telefoneClienteTextField.setText("");
         enderecoClienteTextField.setText("");
-
 
         // Exibe uma mensagem de sucesso (ou faça o que for apropriado no seu contexto)
         JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!");
