@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
     // Atributos
-    private static final String url = "jdbc:postgresql://localhost:5432/RedeTrambique";
-    private static final String usuario = "devnoturno"; // Nome do ADM do Banco de Dados
-    private static final String senha = "devdatardeficaatarde"; // Senha do ADM do Banco de Dados
+    private static final String url = "jdbc:postgresql://localhost:5432/rede";
+    private static final String usuario = "postgres"; // Nome do ADM do Banco de Dados
+    private static final String senha = "postgres"; // Senha do ADM do Banco de Dados
     // Método para ABRIR uma conexão com o Banco de Dados
 
     public static Connection getConnection() {
