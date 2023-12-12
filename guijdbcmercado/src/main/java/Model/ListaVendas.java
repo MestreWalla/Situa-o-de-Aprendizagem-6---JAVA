@@ -6,10 +6,28 @@ public class ListaVendas {
     double valor;
     boolean vip;
     // Contructor
-    public ListaVendas(String data, String cpf, String email) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
-        this.telefone = telefone;
-        this.endereco = endereco;
+    public ListaVendas(String dataHora, double valor, boolean vip) {
+        this.dataHora = dataHora;
+        this.valor = valor;
+        this.vip = vip;
+    }
+    public String getDataHora() {
+        return dataHora;
+    }
+    public void setDataHora(String dataHora) {
+        this.dataHora = dataHora;
+    }
+    public double getValor() {
+        return valor;
+    }
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+    public boolean isVip() {
+        return vip;
+    }
+    public void setVip(boolean vip) {
+        this.vip = vip;
+    }
+    
 }
