@@ -36,7 +36,7 @@ public class ClientesControl {
             // Adiciona os dados de cada clientes como uma nova linha na tabela Swing
             tableModel.addRow(new Object[] {
                     cliente.getNome(), cliente.getCpf(), cliente.getEmail(), cliente.getTelefone(), 
-                    cliente.getEndereco(), });
+                    cliente.getEndereco()});
         }
     }
 

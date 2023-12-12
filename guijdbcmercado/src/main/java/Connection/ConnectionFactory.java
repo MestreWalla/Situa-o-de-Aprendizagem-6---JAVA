@@ -9,8 +9,8 @@ import java.sql.Statement;
 
 public class ConnectionFactory {
     private static final String url = "jdbc:postgresql://localhost:5432/RedeTrambique";
-    private static final String usuario = "devnoturno";
-    private static final String senha = "devdatardeficaatarde";
+    private static final String usuario = "postgres";
+    private static final String senha = "postgres";
 
     public static Connection getConnection() {
         try {

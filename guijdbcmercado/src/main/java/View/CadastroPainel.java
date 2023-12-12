@@ -2,6 +2,7 @@ package View;
 
 import Model.ListaClientes;
 import Model.ListaFuncionarios;
+import Connection.ClientesDAO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -46,6 +47,10 @@ public class CadastroPainel extends JPanel {
 
         setLayout(new BorderLayout());
         Font font = new Font("Arial Black", Font.PLAIN, 16);
+
+        // Criar a tabela no banco de dados quando o painel for criado
+        ClientesDAO clientesDAO = new ClientesDAO();
+        clientesDAO.criarTabela();
 
         // Inicializa a lista de clientes
         listaClientes = new ArrayList<>();
