@@ -115,6 +115,7 @@ public class CadastroClientesPainel extends JPanel {
                 cadastrarCliente();
             }
         });
+    }
 
     private void atualizarFormularioCliente() {
         ajustarLayout(true);
@@ -157,13 +158,7 @@ public class CadastroClientesPainel extends JPanel {
         emailClienteTextField.setText("");
         telefoneClienteTextField.setText("");
         enderecoClienteTextField.setText("");
-<<<<<<< Updated upstream:guijdbcmercado/src/main/java/View/CadastroClientesPainel.java
-
-        // Exibe uma mensagem de sucesso (ou faça o que for apropriado no seu contexto)
-        JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!");
-=======
         
->>>>>>> Stashed changes:guijdbcmercado/src/main/java/View/CadastroPainel.java
     }
 
     // public static void main(String[] args) {
