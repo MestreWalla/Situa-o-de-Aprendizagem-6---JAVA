@@ -22,6 +22,7 @@ public class CadastroProdutosPainel extends JPanel {
     private JLabel precoProdutoLabel;
     private JTextField precoProdutoTextField;
     private JButton cadastrarProdutoButton;
+    int valorTotal;
 
     // Lista para armazenar produtos (opcional, dependendo da lógica de negócios)
     private List<ListaEstoque> listaEstoque;
@@ -74,11 +75,12 @@ public class CadastroProdutosPainel extends JPanel {
 
     private void cadastrarProduto() {
         // Obtém os dados do formulário
-        String codigo = codigoProdutoTextField.getText();
+        int codigo = Integer.parseInt(codigoProdutoTextField.getText());
         String tag = tagProdutoTextField.getText();
         String descricao = descricaoProdutoTextField.getText();
         int quantidade = Integer.parseInt(quantidadeProdutoTextField.getText());
         double preco = Double.parseDouble(precoProdutoTextField.getText());
+        valorTotal+=preco;
 
         // Cria uma instância do DAO e cadastra o produto no banco de dados
         EstoqueDAO estoqueDAO = new EstoqueDAO();
