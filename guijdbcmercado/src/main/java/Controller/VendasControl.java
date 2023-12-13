@@ -42,6 +42,7 @@ public class VendasControl {
     //
     // Método para cadastrar uma nova venda no banco de dados
     public void cadastrar(String dataHora, double valor, boolean vip) {
+        
         Object[] options = { "NÃO", "SIM" };
         int acao = JOptionPane.showOptionDialog(
                 null,

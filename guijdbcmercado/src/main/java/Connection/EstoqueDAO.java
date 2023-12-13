@@ -62,7 +62,7 @@ public class EstoqueDAO {
     }
 
     // Cadastrar Produto no banco de dados
-    public void cadastrar(String codigo, String tag, String descricao, int quantidade, double preco) {
+    public void cadastrar(int codigo, String tag, String descricao, int quantidade, double preco) {
         PreparedStatement stmt = null;
         String sql = "INSERT INTO ESTOQUE_MERCADO (CODIGO, TAG, DESCRICAO, QUANTIDADE, PRECO) VALUES (?,?,?,?,?)";
         try {
