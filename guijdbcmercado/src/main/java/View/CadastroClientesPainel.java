@@ -74,13 +74,6 @@ public class CadastroClientesPainel extends JPanel {
             }
         });
 
-        funcionarioRadioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                atualizarFormularioFuncionario();
-            }
-        });
-
         // Componentes iniciais
         // Clientes
         nomeClienteLabel = new JLabel("Nome:");
@@ -94,18 +87,6 @@ public class CadastroClientesPainel extends JPanel {
         enderecoClienteLabel = new JLabel("Endereco:");
         enderecoClienteTextField = new JTextField(20);
         cadastrarClienteButton = new JButton("Cadastrar");
-        // Funcionarios
-        nomeFuncionarioLabel = new JLabel("Nome:");
-        nomeFuncionarioTextField = new JTextField(20);
-        cpfFuncionarioLabel = new JLabel("CPF:");
-        cpfFuncionarioTextField = new JTextField(20);
-        emailFuncionarioLabel = new JLabel("Email:");
-        emailFuncionarioTextField = new JTextField(20);
-        telefoneFuncionarioLabel = new JLabel("Telefone:");
-        telefoneFuncionarioTextField = new JTextField(11);
-        enderecoFuncionarioLabel = new JLabel("Endereco:");
-        enderecoFuncionarioTextField = new JTextField(20);
-        cadastrarFuncionarioButton = new JButton("Cadastrar");
 
         JPanel formPanel = new JPanel(new GridLayout(6, 2));
         // Cliente
@@ -121,32 +102,6 @@ public class CadastroClientesPainel extends JPanel {
         formPanel.add(enderecoClienteTextField);
         formPanel.add(new JLabel()); // Espaço vazio
         formPanel.add(cadastrarClienteButton);
-        // Funcionario
-        formPanel.add(nomeFuncionarioLabel);
-        formPanel.add(nomeFuncionarioTextField);
-        formPanel.add(cpfFuncionarioLabel);
-        formPanel.add(cpfFuncionarioTextField);
-        formPanel.add(emailFuncionarioLabel);
-        formPanel.add(emailFuncionarioTextField);
-        formPanel.add(telefoneFuncionarioLabel);
-        formPanel.add(telefoneFuncionarioTextField);
-        formPanel.add(enderecoFuncionarioLabel);
-        formPanel.add(enderecoFuncionarioTextField);
-        formPanel.add(new JLabel()); // Espaço vazio
-        formPanel.add(cadastrarFuncionarioButton);
-
-        // Oculta os componentes relacionados aos funcionários inicialmente
-        nomeFuncionarioLabel.setVisible(false);
-        nomeFuncionarioTextField.setVisible(false);
-        cpfFuncionarioLabel.setVisible(false);
-        cpfFuncionarioTextField.setVisible(false);
-        emailFuncionarioLabel.setVisible(false);
-        emailFuncionarioTextField.setVisible(false);
-        telefoneFuncionarioLabel.setVisible(false);
-        telefoneFuncionarioTextField.setVisible(false);
-        enderecoFuncionarioLabel.setVisible(false);
-        enderecoFuncionarioTextField.setVisible(false);
-        cadastrarFuncionarioButton.setVisible(false);
 
         add(formPanel, BorderLayout.CENTER);
 
@@ -161,28 +116,14 @@ public class CadastroClientesPainel extends JPanel {
             }
         });
 
-        cadastrarFuncionarioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cadastrarFuncionario();
-            }
-        });
-    }
-
     private void atualizarFormularioCliente() {
-        ajustarLayout(true, false);
-        revalidate();
-        repaint();
-    }
-
-    private void atualizarFormularioFuncionario() {
-        ajustarLayout(false, true);
+        ajustarLayout(true);
         revalidate();
         repaint();
     }
 
     // Método para configurar a visibilidade dos componentes e ajustar o layout
-    private void ajustarLayout(boolean clienteVisible, boolean funcionarioVisible) {
+    private void ajustarLayout(boolean clienteVisible) {
         nomeClienteLabel.setVisible(clienteVisible);
         nomeClienteTextField.setVisible(clienteVisible);
         cpfClienteLabel.setVisible(clienteVisible);
@@ -194,17 +135,7 @@ public class CadastroClientesPainel extends JPanel {
         enderecoClienteLabel.setVisible(clienteVisible);
         enderecoClienteTextField.setVisible(clienteVisible);
         cadastrarClienteButton.setVisible(clienteVisible);
-        nomeFuncionarioLabel.setVisible(funcionarioVisible);
-        nomeFuncionarioTextField.setVisible(funcionarioVisible);
-        cpfFuncionarioLabel.setVisible(funcionarioVisible);
-        cpfFuncionarioTextField.setVisible(funcionarioVisible);
-        emailFuncionarioLabel.setVisible(funcionarioVisible);
-        emailFuncionarioTextField.setVisible(funcionarioVisible);
-        telefoneFuncionarioLabel.setVisible(funcionarioVisible);
-        telefoneFuncionarioTextField.setVisible(funcionarioVisible);
-        enderecoFuncionarioLabel.setVisible(funcionarioVisible);
-        enderecoFuncionarioTextField.setVisible(funcionarioVisible);
-        cadastrarFuncionarioButton.setVisible(funcionarioVisible);
+
         revalidate();
         repaint();
     }
@@ -233,29 +164,6 @@ public class CadastroClientesPainel extends JPanel {
 =======
         
 >>>>>>> Stashed changes:guijdbcmercado/src/main/java/View/CadastroPainel.java
-    }
-
-    private void cadastrarFuncionario() {
-        // Obtém os dados do formulário
-        String nome = nomeFuncionarioTextField.getText();
-        String cpf = cpfFuncionarioTextField.getText();
-        String email = emailFuncionarioTextField.getText();
-        String telefone = telefoneFuncionarioTextField.getText();
-        String endereco = enderecoFuncionarioTextField.getText();
-
-        // Cria um novo Funcionario e adiciona à lista
-        ListaFuncionarios novoFuncionario = new ListaFuncionarios(nome, cpf, email, telefone, endereco);
-        listaFuncionarios.add(novoFuncionario);
-
-        // Limpa os campos do formulário
-        nomeFuncionarioTextField.setText("");
-        cpfFuncionarioTextField.setText("");
-        emailFuncionarioTextField.setText("");
-        telefoneFuncionarioTextField.setText("");
-        enderecoFuncionarioTextField.setText("");
-
-        // Exibe uma mensagem de sucesso (ou faça o que for apropriado no seu contexto)
-        JOptionPane.showMessageDialog(this, "Funcionario cadastrado com sucesso!");
     }
 
     // public static void main(String[] args) {
