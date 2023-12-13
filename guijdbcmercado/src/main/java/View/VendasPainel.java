@@ -265,16 +265,22 @@ public class VendasPainel extends JPanel {
                 // Obtém dados do produto e quantidade
                 String codigo = textFieldProduto.getText();
                 String tag = textFieldQuantidade.getText();
-                String descrição = textFieldQuantidade.getText();
-                String quantidade = textFieldQuantidade.getText();
-                String preço = textFieldQuantidade.getText();
-
-                // Adiciona ao carrinho
-                // areaCarrinho.append("Produto: " + produto + ", Quantidade: " + quantidade + "\n");
-
-                // Limpa os campos após adicionar ao carrinho
-                textFieldProduto.setText("");
-                textFieldQuantidade.setText("");
+        
+                // Verifica se o produto com o código informado existe no estoque
+                if (produtoExiste(Integer.parseInt(codigo))) {
+                    String descricao = obterDescricaoProduto(codigo);
+                    String quantidade = textFieldQuantidade.getText();
+                    String preco = obterPrecoProduto(codigo);
+        
+                    // Adiciona à tabela
+                    adicionarProdutoATabela(codigo, tag, descricao, quantidade, preco);
+        
+                    // Limpa os campos após adicionar à tabela
+                    textFieldProduto.setText("");
+                    textFieldQuantidade.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Produto com o código " + codigo + " não encontrado no estoque.");
+                }
             }
         });
     }

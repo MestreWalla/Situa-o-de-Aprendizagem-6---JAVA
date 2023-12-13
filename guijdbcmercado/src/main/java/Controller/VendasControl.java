@@ -73,6 +73,24 @@ public class VendasControl {
             atualizarTabela(); // Atualiza a tabela de exibição após a atualização
     }
 
+    private String obterDescricaoProduto(String codigo) {
+        // Implemente a lógica para obter a descrição do produto com base no código
+        // Exemplo: Consultar o banco de dados ou usar um mapeamento fixo
+        return "Descrição do Produto";
+    }
+    
+    private String obterPrecoProduto(String codigo) {
+        // Implemente a lógica para obter o preço do produto com base no código
+        // Exemplo: Consultar o banco de dados ou usar um mapeamento fixo
+        return "Preço do Produto";
+    }
+    
+    private void adicionarProdutoATabela(String codigo, String tag, String descricao, String quantidade, String preco) {
+        // Adiciona os dados à tabela
+        tableModel.addRow(new Object[]{codigo, tag, descricao, quantidade, preco});
+    }
+
+    
     //
     // Método para apagar um vendas do banco de dados
     public void apagar(String dataHora) {
@@ -96,5 +114,7 @@ public class VendasControl {
             JOptionPane.showMessageDialog(null, "Ação cancelada");
         }
     }
+
+    
 
 }
