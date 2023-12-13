@@ -27,9 +27,9 @@ public class EstoqueDAO {
         String sql = "CREATE TABLE IF NOT EXISTS ESTOQUE_MERCADO(CODIGO INT AUTO_INCREMENT PRIMARY KEY, TAG VARCHAR(255), DESCRICAO VARCHAR(255), QUANTIDADE INT, PRECO DOUBLE)";
         try (Statement stmt = this.conexao.createStatement()){
             stmt.execute(sql);
-            System.out.println("Tabela criada com sucesso.");
+            System.out.println("(ESTOQUE) - Tabela criada com sucesso.");
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao criar a tabela: "+e.getMessage(), e);
+            throw new RuntimeException("(ESTOQUE) - Erro ao criar a tabela: "+e.getMessage(), e);
         } finally {
             ConnectionFactory.closeConnection(this.conexao);
         }
@@ -62,7 +62,7 @@ public class EstoqueDAO {
     }
 
     // Cadastrar Produto no banco de dados
-    public void cadastrar(int codigo, String tag, String descricao, int quantidade, double preco) {
+    public void cadastrar(String codigo, String tag, String descricao, int quantidade, double preco) {
         PreparedStatement stmt = null;
         String sql = "INSERT INTO ESTOQUE_MERCADO (CODIGO, TAG, DESCRICAO, QUANTIDADE, PRECO) VALUES (?,?,?,?,?)";
         try {
@@ -73,7 +73,7 @@ public class EstoqueDAO {
             stmt.setInt(4, quantidade);
             stmt.setDouble(5, preco);
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Dados inseridos com sucesso");
+            JOptionPane.showMessageDialog(null,"(ESTOQUE) - Dados inseridos com sucesso");
         } catch (SQLException e ) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao inserir dados no banco de dados.", JOptionPane.ERROR_MESSAGE);
         } finally {
@@ -93,9 +93,9 @@ public class EstoqueDAO {
             stmt.setDouble(4, preco);
             stmt.setInt(5, codigo);
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Dados atualizados com sucesso");
+            JOptionPane.showMessageDialog(null,"(ESTOQUE) - Dados atualizados com sucesso");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Erro ao atualizar dados no banco de dados");
+            JOptionPane.showMessageDialog(null,"(ESTOQUE) - Erro ao atualizar dados no banco de dados");
         } finally {
             ConnectionFactory.closeConnection(conexao, stmt);
         }
@@ -109,11 +109,14 @@ public class EstoqueDAO {
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, codigo);
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Dado apagado com sucesso");
+            JOptionPane.showMessageDialog(null,"(ESTOQUE) - Dado apagado com sucesso");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Erro ao apagar dados no banco de dados");
+            JOptionPane.showMessageDialog(null,"(ESTOQUE) - Erro ao apagar dados no banco de dados");
         } finally {
             ConnectionFactory.closeConnection(conexao, stmt);
         }
+    }
+
+    public void cadastrar(int codigo, String tag, String descricao, int quantidade, double preco) {
     }
 }

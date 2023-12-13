@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class CadastroClientesPainel extends JPanel {
-    // CLIENTES
+
     private JLabel nomeClienteLabel;
     private JTextField nomeClienteTextField;
     private JLabel cpfClienteLabel;
@@ -31,11 +31,7 @@ public class CadastroClientesPainel extends JPanel {
         super();
 
         setLayout(new BorderLayout());
-        Font font = new Font("Arial Black", Font.PLAIN, 16);
-
-        // Criar a tabela no banco de dados quando o painel for criado
-        ClientesDAO clientesDAO = new ClientesDAO();
-        clientesDAO.criarTabela();
+        // Font font = new Font("Arial Black", Font.PLAIN, 16);
 
         // Inicializa a lista de clientes
         listaClientes = new ArrayList<>();

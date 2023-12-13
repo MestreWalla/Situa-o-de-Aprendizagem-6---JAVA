@@ -33,21 +33,29 @@ public class JanelaPrincipal extends JFrame {
         VendasPainel tab1 = new VendasPainel();
         jTPane.addTab("", iconVendas, tab1, "Vendas");
 
-        // Tab02: Cadastro
-        ImageIcon iconCadastro = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Cliente.png");
-        Image imageCadastro = iconCadastro.getImage();
-        Image scaledImageCadastro = imageCadastro.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
-        iconCadastro = new ImageIcon(scaledImageCadastro);
+        // Tab02: Clientes
+        ImageIcon iconClientes = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Cliente.png");
+        Image imageClientes = iconClientes.getImage();
+        Image scaledImageClientes = imageClientes.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+        iconClientes = new ImageIcon(scaledImageClientes);
         CadastroClientesPainel tab2 = new CadastroClientesPainel();
-        jTPane.addTab("", iconCadastro, tab2, "Cadastro");
+        jTPane.addTab("", iconClientes, tab2, "Clientes");
 
-        // Tab03: Exibir
-        ImageIcon iconExibirCadastro = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Funcionario.png");
-        Image imageExibirCadastro = iconExibirCadastro.getImage();
-        Image scaledImageExibirCadastro = imageExibirCadastro.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
-        iconExibirCadastro = new ImageIcon(scaledImageExibirCadastro);
+        // Tab03: Funcionarios
+        ImageIcon iconFuncionarios = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Funcionario.png");
+        Image imageFuncionarios = iconFuncionarios.getImage();
+        Image scaledImageFuncionarios = imageFuncionarios.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+        iconFuncionarios = new ImageIcon(scaledImageFuncionarios);
         CadastroFuncionariosPainel tab3 = new CadastroFuncionariosPainel();
-        jTPane.addTab("", iconExibirCadastro, tab3, "Exibir");
+        jTPane.addTab("", iconFuncionarios, tab3, "Funcionarios");
+
+         // Tab04: Produtos
+        ImageIcon iconProdutos = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Produtos.png");
+        Image imageProdutos = iconProdutos.getImage();
+        Image scaledImageProdutos = imageProdutos.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+        iconProdutos = new ImageIcon(scaledImageProdutos);
+        CadastroProdutosPainel tab4 = new CadastroProdutosPainel();
+        jTPane.addTab("", iconProdutos, tab4, "Exibir");
 
         setBounds(0, 0, 1280, 720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

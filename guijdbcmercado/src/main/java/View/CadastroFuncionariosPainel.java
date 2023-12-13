@@ -22,26 +22,20 @@ public class CadastroFuncionariosPainel extends JPanel {
     private JLabel enderecoFuncionarioLabel;
     private JTextField enderecoFuncionarioTextField;
     private JButton cadastrarFuncionarioButton;
-    private JButton mostrarComponentesButton;  // Botão para mostrar os componentes relacionados aos funcionários
 
-    // Lista para armazenar clientes
+    // Lista para armazenar funcionários
     private ArrayList<ListaFuncionarios> listaFuncionarios;
 
     public CadastroFuncionariosPainel() {
         super();
 
         setLayout(new BorderLayout());
-        Font font = new Font("Arial Black", Font.PLAIN, 16);
-
-        // Criar a tabela no banco de dados quando o painel for criado
-        FuncionariosDAO funcionariosDAO = new FuncionariosDAO();
-        funcionariosDAO.criarTabela();
+        // Font font = new Font("Arial Black", Font.PLAIN, 16);
 
         // Inicializa a lista de funcionários
         listaFuncionarios = new ArrayList<>();
 
         // Componentes iniciais
-        // Funcionários
         nomeFuncionarioLabel = new JLabel("Nome:");
         nomeFuncionarioTextField = new JTextField(20);
         cpfFuncionarioLabel = new JLabel("CPF:");
@@ -53,10 +47,8 @@ public class CadastroFuncionariosPainel extends JPanel {
         enderecoFuncionarioLabel = new JLabel("Endereco:");
         enderecoFuncionarioTextField = new JTextField(20);
         cadastrarFuncionarioButton = new JButton("Cadastrar");
-        mostrarComponentesButton = new JButton("Adicionar Funcionário");  // Novo botão
 
-        JPanel formPanel = new JPanel(new GridLayout(7, 2));  // Ajuste o número de linhas para incluir o novo botão
-        // Funcionários
+        JPanel formPanel = new JPanel(new GridLayout(6, 2));
         formPanel.add(nomeFuncionarioLabel);
         formPanel.add(nomeFuncionarioTextField);
         formPanel.add(cpfFuncionarioLabel);
@@ -69,61 +61,19 @@ public class CadastroFuncionariosPainel extends JPanel {
         formPanel.add(enderecoFuncionarioTextField);
         formPanel.add(new JLabel());  // Espaço vazio
         formPanel.add(cadastrarFuncionarioButton);
-        formPanel.add(new JLabel());  // Espaço vazio
-        formPanel.add(mostrarComponentesButton);  // Adicione o novo botão
-
-        // Torna invisíveis os componentes relacionados aos funcionários inicialmente
-        esconderComponentesFuncionarios();
 
         add(formPanel, BorderLayout.CENTER);
 
-        // Adiciona listener aos botões de cadastrar e mostrar
+        // Criar as tabelas
+        new FuncionariosDAO().criarTabela();
+
+        // Adiciona listener ao botão de cadastrar
         cadastrarFuncionarioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cadastrarFuncionario();
             }
         });
-
-        mostrarComponentesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mostrarComponentesFuncionarios();
-            }
-        });
-    }
-
-    private void esconderComponentesFuncionarios() {
-        // Torna invisíveis os componentes relacionados aos funcionários
-        nomeFuncionarioLabel.setVisible(false);
-        nomeFuncionarioTextField.setVisible(false);
-        cpfFuncionarioLabel.setVisible(false);
-        cpfFuncionarioTextField.setVisible(false);
-        emailFuncionarioLabel.setVisible(false);
-        emailFuncionarioTextField.setVisible(false);
-        telefoneFuncionarioLabel.setVisible(false);
-        telefoneFuncionarioTextField.setVisible(false);
-        enderecoFuncionarioLabel.setVisible(false);
-        enderecoFuncionarioTextField.setVisible(false);
-        cadastrarFuncionarioButton.setVisible(false);
-    }
-
-    private void mostrarComponentesFuncionarios() {
-        // Torna visíveis os componentes relacionados aos funcionários
-        nomeFuncionarioLabel.setVisible(true);
-        nomeFuncionarioTextField.setVisible(true);
-        cpfFuncionarioLabel.setVisible(true);
-        cpfFuncionarioTextField.setVisible(true);
-        emailFuncionarioLabel.setVisible(true);
-        emailFuncionarioTextField.setVisible(true);
-        telefoneFuncionarioLabel.setVisible(true);
-        telefoneFuncionarioTextField.setVisible(true);
-        enderecoFuncionarioLabel.setVisible(true);
-        enderecoFuncionarioTextField.setVisible(true);
-        cadastrarFuncionarioButton.setVisible(true);
-
-        // Opcional: Esconde o botão após exibir os componentes
-        mostrarComponentesButton.setVisible(false);
     }
 
     private void cadastrarFuncionario() {
@@ -148,17 +98,4 @@ public class CadastroFuncionariosPainel extends JPanel {
         // Exibe uma mensagem de sucesso (ou faça o que for apropriado no seu contexto)
         JOptionPane.showMessageDialog(this, "Funcionário cadastrado com sucesso!");
     }
-
-    // public static void main(String[] args) {
-    // SwingUtilities.invokeLater(new Runnable() {
-    // @Override
-    // public void run() {
-    // JFrame frame = new JFrame();
-    // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    // frame.getContentPane().add(new CadastroPainel());
-    // frame.setSize(400, 300);
-    // frame.setVisible(true);
-    // }
-    // });
-    // }
 }

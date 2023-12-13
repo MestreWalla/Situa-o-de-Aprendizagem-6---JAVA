@@ -25,9 +25,9 @@ public class FuncionariosDAO {
         String sql = "CREATE TABLE IF NOT EXISTS FUNCIONARIOS_MERCADO(NOME VARCHAR(255), CPF VARCHAR (255) PRIMARY KEY, EMAIL VARCHAR(255), TELEFONE VARCHAR(13), ENDERECO VARCHAR (255))";
         try (Statement stmt = this.connection.createStatement()){
             stmt.execute(sql);
-            System.out.println("tabela criada com sucesso.");
+            System.out.println("(FUNCIONARIOS) - Tabela criada com sucesso.");
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao criar a tabela: "+e.getMessage(), e);
+            throw new RuntimeException("(FUNCIONARIOS) - Erro ao criar a tabela: "+e.getMessage(), e);
         } finally {
             ConnectionFactory.closeConnection(this.connection);
         }
@@ -76,7 +76,7 @@ public class FuncionariosDAO {
             stmt.setString(4,telefone);
             stmt.setString(5,endereco);
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Dados inseridos com sucesso");
+            JOptionPane.showMessageDialog(null,"(FUNCIONARIOS) - Dados inseridos com sucesso");
         } catch (SQLException e ) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro ao inserir dados no banco de dados.", JOptionPane.ERROR_MESSAGE);
         } finally {
@@ -97,7 +97,7 @@ public class FuncionariosDAO {
             stmt.setString(4,telefone);
             stmt.setString(5,endereco);
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Dados atualizados com sucesso");
+            JOptionPane.showMessageDialog(null,"(FUNCIONARIOS) - Dados atualizados com sucesso");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,"Erro ao atualizar dados no banco de dados");
         } finally {
@@ -113,9 +113,9 @@ public class FuncionariosDAO {
             stmt = connection.prepareStatement(sql);
             stmt.setString(2,cpf);
             stmt.executeUpdate(); // Executa a instrução SQL
-            JOptionPane.showMessageDialog(null,"Dado apagado com sucesso");
+            JOptionPane.showMessageDialog(null,"(FUNCIONARIOS) - Dado apagado com sucesso");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Erro ao paagar dados no banco de dados");
+            JOptionPane.showMessageDialog(null,"(FUNCIONARIOS) - Erro ao apagar dados no banco de dados");
         } finally {
             ConnectionFactory.closeConnection(connection, stmt);
         }
