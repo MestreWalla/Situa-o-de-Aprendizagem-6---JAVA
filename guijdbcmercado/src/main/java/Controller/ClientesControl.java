@@ -28,17 +28,17 @@ public class ClientesControl {
     // métodos do modelo CRUD
     //
     // Método para atualizar a tabela de exibição com dados do banco de dados
-    // private void atualizarTabela() {
-    //     tableModel.setRowCount(0); // Limpa todas as linhas existentes na tabela
-    //     clientes = new ClientesDAO().listarTodos();
-    //     // Obtém os clientes atualizados do banco de dados
-    //     for (ListaClientes cliente : clientes) {
-    //         // Adiciona os dados de cada clientes como uma nova linha na tabela Swing
-    //         tableModel.addRow(new Object[] {
-    //                 cliente.getNome(), cliente.getCpf(), cliente.getEmail(), cliente.getTelefone(), 
-    //                 cliente.getEndereco() });
-    //     }
-    // }
+    private void atualizarTabela() {
+        tableModel.setRowCount(0); // Limpa todas as linhas existentes na tabela
+        clientes = new ClientesDAO().listarTodos();
+        // Obtém os clientes atualizados do banco de dados
+        for (ListaClientes cliente : clientes) {
+            // Adiciona os dados de cada clientes como uma nova linha na tabela Swing
+            tableModel.addRow(new Object[] {
+                    cliente.getNome(), cliente.getCpf(), cliente.getEmail(), cliente.getTelefone(), 
+                    cliente.getEndereco() });
+        }
+    }
 
     //
     // Método para cadastrar um novo clientes no banco de dados
