@@ -120,8 +120,7 @@ public class CadastroClientesPainel extends JPanel {
         telefoneClienteTextField.setText("");
         enderecoClienteTextField.setText("");
 
-        // Exibe uma mensagem de sucesso (ou faça o que for apropriado no seu contexto)
-        JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!");
+
     }
 
     // public static void main(String[] args) {

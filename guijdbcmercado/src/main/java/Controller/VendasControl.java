@@ -6,20 +6,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Connection.ClientesDAO;
-import Model.ListaClientes;
+import Connection.VendasDAO;
+import Model.ListaVendas;
 
-public class ClientesControl {
+public class VendasControl {
     //
     // atributos
-    private List<ListaClientes> clientes;
+    private List<ListaVendas> vendas;
     private DefaultTableModel tableModel;
     private JTable table;
 
     //
     // contrutor
-    public ClientesControl(List<ListaClientes> clientes, DefaultTableModel tableModel, JTable table) {
-        this.clientes = clientes;
+    public VendasControl(List<ListaVendas> vendas, DefaultTableModel tableModel, JTable table) {
+        this.vendas = vendas;
         this.tableModel = tableModel;
         this.table = table;
     }
@@ -30,23 +30,22 @@ public class ClientesControl {
     // Método para atualizar a tabela de exibição com dados do banco de dados
     private void atualizarTabela() {
         tableModel.setRowCount(0); // Limpa todas as linhas existentes na tabela
-        clientes = new ClientesDAO().listarTodos();
-        // Obtém os clientes atualizados do banco de dados
-        for (ListaClientes cliente : clientes) {
-            // Adiciona os dados de cada clientes como uma nova linha na tabela Swing
+        vendas = new VendasDAO().listarTodos();
+        // Obtém os vendas atualizados do banco de dados
+        for (ListaVendas venda : vendas) {
+            // Adiciona os dados de cada vendas como uma nova linha na tabela Swing
             tableModel.addRow(new Object[] {
-                    cliente.getNome(), cliente.getCpf(), cliente.getEmail(), cliente.getTelefone(), 
-                    cliente.getEndereco() });
+                    venda.getDataHora(), venda.getValor(), venda.getVip() });
         }
     }
 
     //
-    // Método para cadastrar um novo clientes no banco de dados
-    public void cadastrar(String nome, String cpf, String email, String telefone, String endereco) {
+    // Método para cadastrar uma nova venda no banco de dados
+    public void cadastrar(String dataHora, double valor, boolean vip) {
         Object[] options = { "NÃO", "SIM" };
         int acao = JOptionPane.showOptionDialog(
                 null,
-                "Deseja cadastrar novo cliente?",
+                "Deseja finalizar a compra?",
                 "Confirmação",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.WARNING_MESSAGE,
@@ -55,31 +54,31 @@ public class ClientesControl {
                 options[0]);
 
         if (acao == 1) {
-            new ClientesDAO().cadastrar(nome, cpf, email, telefone, endereco);
+            new VendasDAO().cadastrar(dataHora, valor, vip);
             //
             // Chama o método de cadastro no banco de dados
-            JOptionPane.showMessageDialog(null, "Cadastro concluido com sucesso");
-            //atualizarTabela(); // Atualiza a tabela de exibição após o cadastro
+            JOptionPane.showMessageDialog(null, "Venda concluida com sucesso");
+            //atualizarTabela(); // Atualiza a tabela de exibição após a Venda
         } else {
-            JOptionPane.showMessageDialog(null, "Cadastro cancelado");
+            JOptionPane.showMessageDialog(null, "Venda cancelada");
         }
     }
 
     //
-    // Método para atualizar os dados de um clientes no banco de dados
-    public void atualizar(String nome, String cpf, String email, String telefone, String endereco) {
-        new ClientesDAO().atualizar(nome, cpf, email, telefone, endereco);
+    // Método para atualizar os dados de um vendas no banco de dados
+    public void atualizar(String dataHora, double valor, boolean vip) {
+        new VendasDAO().atualizar(dataHora, valor, vip);
         // Chama o método de atualização no banco de dados
             atualizarTabela(); // Atualiza a tabela de exibição após a atualização
     }
 
     //
-    // Método para apagar um clientes do banco de dados
-    public void apagar(String cpf) {
+    // Método para apagar um vendas do banco de dados
+    public void apagar(String dataHora) {
         Object[] options = { "NÃO", "SIM" };
         int acao = JOptionPane.showOptionDialog(
                 null,
-                "Tem Certeza de que deseja excluir o cadastro desse cliente?",
+                "Tem Certeza de que deseja excluir o registro dessa venda?",
                 "Confirmação",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.WARNING_MESSAGE,
@@ -88,10 +87,10 @@ public class ClientesControl {
                 options[0]);
 
         if (acao == 1) {
-            new ClientesDAO().apagar(cpf);
+            new VendasDAO().apagar(dataHora);
             // Chama o método de exclusão no banco de dados
             //atualizarTabela(); // Atualiza a tabela de exibição após a exclusão
-            JOptionPane.showMessageDialog(null, "Cadastro excluido");
+            JOptionPane.showMessageDialog(null, "Registro de venda excluido");
         } else {
             JOptionPane.showMessageDialog(null, "Ação cancelada");
         }
