@@ -30,7 +30,6 @@ public class JanelaPrincipal extends JFrame {
         Image image = iconVendas.getImage();
         Image scaledImage = image.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconVendas = new ImageIcon(scaledImage);
-
         VendasPainel tab1 = new VendasPainel();
         jTPane.addTab("", iconVendas, tab1, "Vendas");
 
@@ -39,9 +38,16 @@ public class JanelaPrincipal extends JFrame {
         Image imageCadastro = iconCadastro.getImage();
         Image scaledImageCadastro = imageCadastro.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconCadastro = new ImageIcon(scaledImageCadastro);
-
         CadastroPainel tab2 = new CadastroPainel();
         jTPane.addTab("", iconCadastro, tab2, "Cadastro");
+
+        // Tab03: Cadastro
+        ImageIcon iconExibirCadastro = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\ExibirCadastro.png");
+        Image imageExibirCadastro = iconExibirCadastro.getImage();
+        Image scaledImageExibirCadastro = imageExibirCadastro.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+        iconExibirCadastro = new ImageIcon(scaledImageExibirCadastro);
+        ExibirCadastroPainel tab2 = new exibirCadastroPainel();
+        jTPane.addTab("", iconExibirCadastro, tab2, "Cadastro");
 
         setBounds(0, 0, 1280, 720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

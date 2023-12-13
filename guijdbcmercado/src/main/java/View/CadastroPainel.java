@@ -3,6 +3,8 @@ package View;
 import Model.ListaClientes;
 import Model.ListaFuncionarios;
 import Connection.ClientesDAO;
+import Connection.FuncionariosDAO;
+
 import javax.swing.*;
 
 import Controller.ClientesControl;
@@ -54,6 +56,8 @@ public class CadastroPainel extends JPanel {
         // Criar a tabela no banco de dados quando o painel for criado
         ClientesDAO clientesDAO = new ClientesDAO();
         clientesDAO.criarTabela();
+        FuncionariosDAO funcionariosDAO = new FuncionariosDAO();
+        funcionariosDAO.criarTabela();
 
         // Inicializa a lista de clientes
         listaClientes = new ArrayList<>();
