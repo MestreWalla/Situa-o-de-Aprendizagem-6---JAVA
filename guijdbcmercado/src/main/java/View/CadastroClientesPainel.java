@@ -14,10 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class CadastroPainel extends JPanel {
+public class CadastroClientesPainel extends JPanel {
     // ESCOLHA DE CADASTRO
     private JRadioButton clienteRadioButton;
-    private JRadioButton funcionarioRadioButton;
     // CLIENTES
     private JLabel nomeClienteLabel;
     private JTextField nomeClienteTextField;
@@ -30,24 +29,11 @@ public class CadastroPainel extends JPanel {
     private JLabel enderecoClienteLabel;
     private JTextField enderecoClienteTextField;
     private JButton cadastrarClienteButton;
-    // FUNCIONARIOS
-    private JLabel nomeFuncionarioLabel;
-    private JTextField nomeFuncionarioTextField;
-    private JLabel cpfFuncionarioLabel;
-    private JTextField cpfFuncionarioTextField;
-    private JLabel emailFuncionarioLabel;
-    private JTextField emailFuncionarioTextField;
-    private JLabel telefoneFuncionarioLabel;
-    private JTextField telefoneFuncionarioTextField;
-    private JLabel enderecoFuncionarioLabel;
-    private JTextField enderecoFuncionarioTextField;
-    private JButton cadastrarFuncionarioButton;
 
     // Lista para armazenar clientes
     private ArrayList<ListaClientes> listaClientes;
-    private ArrayList<ListaFuncionarios> listaFuncionarios;
 
-    public CadastroPainel() {
+    public CadastroClientesPainel() {
         super();
 
         setLayout(new BorderLayout());
@@ -56,12 +42,9 @@ public class CadastroPainel extends JPanel {
         // Criar a tabela no banco de dados quando o painel for criado
         ClientesDAO clientesDAO = new ClientesDAO();
         clientesDAO.criarTabela();
-        FuncionariosDAO funcionariosDAO = new FuncionariosDAO();
-        funcionariosDAO.criarTabela();
 
         // Inicializa a lista de clientes
         listaClientes = new ArrayList<>();
-        listaFuncionarios = new ArrayList<>();
 
         // RadioButtons para escolher entre Cliente e Funcionário
         // CLIENTE
@@ -74,24 +57,12 @@ public class CadastroPainel extends JPanel {
         clienteRadioButton.setIconTextGap(30);
         clienteRadioButton.setIcon(icoCliente);
         clienteRadioButton.setPreferredSize(new Dimension(150, 100));
-        // FUNCIONARIO
-        funcionarioRadioButton = new JRadioButton("Funcionário");
-        funcionarioRadioButton.setFont(font);
-        ImageIcon iconFuncionario = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Funcionario.png");
-        Image ImageFuncionario = iconFuncionario.getImage();
-        Image scaledImageFuncionario = ImageFuncionario.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
-        iconFuncionario = new ImageIcon(scaledImageFuncionario);
-        funcionarioRadioButton.setIconTextGap(30);
-        funcionarioRadioButton.setIcon(iconFuncionario);
-        funcionarioRadioButton.setPreferredSize(new Dimension(150, 100));
 
         ButtonGroup escolha = new ButtonGroup();
         escolha.add(clienteRadioButton);
-        escolha.add(funcionarioRadioButton);
 
         JPanel radioPanel = new JPanel();
         radioPanel.add(clienteRadioButton);
-        radioPanel.add(funcionarioRadioButton);
 
         add(radioPanel, BorderLayout.NORTH);
 

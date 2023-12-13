@@ -34,20 +34,20 @@ public class JanelaPrincipal extends JFrame {
         jTPane.addTab("", iconVendas, tab1, "Vendas");
 
         // Tab02: Cadastro
-        ImageIcon iconCadastro = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Cadastro.png");
+        ImageIcon iconCadastro = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Cliente.png");
         Image imageCadastro = iconCadastro.getImage();
         Image scaledImageCadastro = imageCadastro.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconCadastro = new ImageIcon(scaledImageCadastro);
-        CadastroPainel tab2 = new CadastroPainel();
+        CadastroClientesPainel tab2 = new CadastroClientesPainel();
         jTPane.addTab("", iconCadastro, tab2, "Cadastro");
 
-        // Tab03: Cadastro
-        ImageIcon iconExibirCadastro = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\ExibirCadastro.png");
+        // Tab03: Exibir
+        ImageIcon iconExibirCadastro = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Funcionario.png");
         Image imageExibirCadastro = iconExibirCadastro.getImage();
         Image scaledImageExibirCadastro = imageExibirCadastro.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconExibirCadastro = new ImageIcon(scaledImageExibirCadastro);
-        ExibirCadastroPainel tab2 = new exibirCadastroPainel();
-        jTPane.addTab("", iconExibirCadastro, tab2, "Cadastro");
+        CadastroFuncionariosPainel tab3 = new CadastroFuncionariosPainel();
+        jTPane.addTab("", iconExibirCadastro, tab3, "Exibir");
 
         setBounds(0, 0, 1280, 720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
