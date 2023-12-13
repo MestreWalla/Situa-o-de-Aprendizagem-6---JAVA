@@ -6,7 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import Controller.VendasControl;
+import Connection.VendasDAO;
+import Model.ListaVendas;
 
 public class VendasPainel extends JPanel {
 
@@ -18,7 +25,12 @@ public class VendasPainel extends JPanel {
     private JLabel labelQuantidade;
     private JTextField textFieldQuantidade;
     private JButton botaoAdicionar;
-    private JTextArea areaCarrinho;
+    // private JTextArea areaCarrinho;
+    private List<ListaVendas> vendas;
+    private JTable table;
+    private DefaultTableModel tableModel;
+    private int linhaSelecionada = -1;
+
     private JButton finalizarButton;
     private JButton removerButton;
     private JButton devolucaoButton;
@@ -182,9 +194,17 @@ public class VendasPainel extends JPanel {
         add(inputPanel, BorderLayout.WEST);
 
         // Área de exibição do carrinho (no centro)
-        areaCarrinho = new JTextArea(55, 30);
-        JScrollPane scrollPane = new JScrollPane(areaCarrinho);
-        add(scrollPane, BorderLayout.CENTER);
+        // areaCarrinho = new JTextArea(55, 30);
+        // JScrollPane scrollPane = new JScrollPane(areaCarrinho);
+        // add(scrollPane, BorderLayout.CENTER);
+
+        // tabela de carros
+        JScrollPane jSPane = new JScrollPane();
+        add(jSPane);
+        tableModel = new DefaultTableModel(new Object[][] {},
+                new String[] { "codigo", "tag", "Descrição", "Quantidade", "Preço" });
+        table = new JTable(tableModel);
+        jSPane.setViewportView(table);
 
         // Configuração do painel de botões (na parte inferior)
         JPanel botoesPanel = new JPanel();
@@ -243,11 +263,14 @@ public class VendasPainel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Obtém dados do produto e quantidade
-                String produto = textFieldProduto.getText();
+                String codigo = textFieldProduto.getText();
+                String tag = textFieldQuantidade.getText();
+                String descrição = textFieldQuantidade.getText();
                 String quantidade = textFieldQuantidade.getText();
+                String preço = textFieldQuantidade.getText();
 
                 // Adiciona ao carrinho
-                areaCarrinho.append("Produto: " + produto + ", Quantidade: " + quantidade + "\n");
+                // areaCarrinho.append("Produto: " + produto + ", Quantidade: " + quantidade + "\n");
 
                 // Limpa os campos após adicionar ao carrinho
                 textFieldProduto.setText("");
@@ -272,6 +295,6 @@ public class VendasPainel extends JPanel {
 
     // Exemplo de método para limpar o carrinho (pode ser usado conforme necessário)
     public void limparCarrinho() {
-        areaCarrinho.setText("");
+        // areaCarrinho.setText("");
     }
 }
