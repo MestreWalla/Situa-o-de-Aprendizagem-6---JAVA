@@ -77,6 +77,30 @@ public class CadastroClientesPainel extends JPanel {
         });
     }
 
+    private void atualizarFormularioCliente() {
+        ajustarLayout(true);
+        revalidate();
+        repaint();
+    }
+
+    // Método para configurar a visibilidade dos componentes e ajustar o layout
+    private void ajustarLayout(boolean clienteVisible) {
+        nomeClienteLabel.setVisible(clienteVisible);
+        nomeClienteTextField.setVisible(clienteVisible);
+        cpfClienteLabel.setVisible(clienteVisible);
+        cpfClienteTextField.setVisible(clienteVisible);
+        emailClienteLabel.setVisible(clienteVisible);
+        emailClienteTextField.setVisible(clienteVisible);
+        telefoneClienteLabel.setVisible(clienteVisible);
+        telefoneClienteTextField.setVisible(clienteVisible);
+        enderecoClienteLabel.setVisible(clienteVisible);
+        enderecoClienteTextField.setVisible(clienteVisible);
+        cadastrarClienteButton.setVisible(clienteVisible);
+
+        revalidate();
+        repaint();
+    }
+
     private void cadastrarCliente() {
         // Obtém os dados do formulário
         String nome = nomeClienteTextField.getText();
@@ -95,6 +119,9 @@ public class CadastroClientesPainel extends JPanel {
         emailClienteTextField.setText("");
         telefoneClienteTextField.setText("");
         enderecoClienteTextField.setText("");
+
+        // Exibe uma mensagem de sucesso (ou faça o que for apropriado no seu contexto)
+        JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!");
     }
 
     // public static void main(String[] args) {
