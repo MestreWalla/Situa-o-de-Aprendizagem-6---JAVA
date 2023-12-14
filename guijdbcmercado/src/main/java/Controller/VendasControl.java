@@ -1,13 +1,18 @@
 package Controller;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Connection.ConnectionFactory;
 import Connection.VendasDAO;
 import Model.ListaVendas;
+import javafx.event.ActionEvent;
 
 public class VendasControl {
     //
@@ -114,7 +119,21 @@ public class VendasControl {
             JOptionPane.showMessageDialog(null, "Ação cancelada");
         }
     }
-
-    
-
+    // Define the produtoExiste method to check if a product exists in the inventory
+    public static boolean produtoExiste(String codigoProduto) {
+        // Implement your logic to check if the product exists in the inventory
+        // For example, you might query a database or check a collection of products
+        // Return true if the product exists, false otherwise
+        // Example (replace with your actual logic):
+        try {
+            String query = "SELECT * FROM estoque WHERE codigo_produto = ?";
+            PreparedStatement preparedStatement = ConnectionFactory.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, codigoProduto);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next(); // If there is at least one result, the product exists
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Handle the exception based on your application's needs
+        }
+    }
 }
