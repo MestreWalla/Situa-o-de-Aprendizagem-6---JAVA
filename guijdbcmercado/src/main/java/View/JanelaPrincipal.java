@@ -64,10 +64,10 @@ public class JanelaPrincipal extends JFrame {
                 ((Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (this.getHeight() / 2)));
 
         // Define o estado da janela como maximizado (tela cheia)
-        // setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Oculta a barra da janela principal
-        // setUndecorated(true);
+        setUndecorated(true);
 
         // Define o estado da janela como fullscreen
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);

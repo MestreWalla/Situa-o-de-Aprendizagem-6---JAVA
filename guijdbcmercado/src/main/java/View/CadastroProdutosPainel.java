@@ -23,7 +23,6 @@ public class CadastroProdutosPainel extends JPanel {
     private JLabel precoProdutoLabel;
     private JTextField precoProdutoTextField;
     private JButton cadastrarProdutoButton;
-    private int valorTotal;
 
     // Tabela Produtos
     private List<ListaEstoque> listaEstoque;
@@ -90,7 +89,6 @@ public class CadastroProdutosPainel extends JPanel {
         String descricao = descricaoProdutoTextField.getText();
         int quantidade = Integer.parseInt(quantidadeProdutoTextField.getText());
         double preco = Double.parseDouble(precoProdutoTextField.getText());
-        valorTotal += preco;
 
         // Cria uma instância do DAO e cadastra o produto no banco de dados
         EstoqueDAO estoqueDAO = new EstoqueDAO();
