@@ -36,8 +36,11 @@ public class CadastroProdutosPainel extends JPanel {
 
         setLayout(new BorderLayout());
 
-        // Inicializa a lista de produtos (opcional, dependendo da lógica de negócios)
-        listaEstoque = new EstoqueDAO().listarTodos();
+        // Configuração da tabela
+        String[] columnNames = { "Código", "Tag", "Descrição", "Quantidade", "Preço" };
+        tableModel = new DefaultTableModel(columnNames, 0);
+        table = new JTable(tableModel);
+        atualizarTabela();
 
         // Componentes iniciais
         codigoProdutoLabel = new JLabel("Código:");
@@ -51,11 +54,6 @@ public class CadastroProdutosPainel extends JPanel {
         precoProdutoLabel = new JLabel("Preço:");
         precoProdutoTextField = new JTextField(10);
         cadastrarProdutoButton = new JButton("Cadastrar");
-
-        // Configuração da tabela
-        String[] columnNames = {"Código", "Tag", "Descrição", "Quantidade", "Preço"};
-        tableModel = new DefaultTableModel(columnNames, 0);
-        table = new JTable(tableModel);
 
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.SOUTH);
@@ -99,7 +97,7 @@ public class CadastroProdutosPainel extends JPanel {
         estoqueDAO.cadastrar(codigo, tag, descricao, quantidade, preco);
 
         // Adiciona uma nova linha à tabela com os dados do produto cadastrado
-        Object[] rowData = {codigo, tag, descricao, quantidade, preco};
+        Object[] rowData = { codigo, tag, descricao, quantidade, preco };
         tableModel.addRow(rowData);
 
         // Limpa os campos do formulário
@@ -109,12 +107,26 @@ public class CadastroProdutosPainel extends JPanel {
         quantidadeProdutoTextField.setText("");
         precoProdutoTextField.setText("");
 
+        System.out.println("Produto cadastrado");
+
         // Atualiza a lista de produtos (opcional, dependendo da lógica de negócios)
         listaEstoque = estoqueDAO.listarTodos();
+        atualizarTabela();
     }
 
-    // Método opcional para obter a lista de produtos (dependendo da lógica de negócios)
+    // Método opcional para obter a lista de produtos (dependendo da lógica de
+    // negócios)
     public List<ListaEstoque> getListaEstoque() {
         return listaEstoque;
+    }
+
+    private void atualizarTabela() {
+        tableModel.setRowCount(0);
+        listaEstoque = new EstoqueDAO().listarTodos();
+        for (ListaEstoque produto : listaEstoque) {
+            tableModel.addRow(new Object[] {
+                    produto.getCodigo(), produto.getTag(), produto.getDescricao(), produto.getQuantidade(),
+                    produto.getPreco() });
+        }
     }
 }
