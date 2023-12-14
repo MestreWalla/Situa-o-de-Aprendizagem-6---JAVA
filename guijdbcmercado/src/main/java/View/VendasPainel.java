@@ -26,6 +26,7 @@ public class VendasPainel extends JPanel {
     private JTextField textFieldQuantidade;
     private JButton botaoAdicionar;
     // private JTextArea areaCarrinho;
+    
     private List<ListaVendas> vendas;
     private JTable table;
     private DefaultTableModel tableModel;
@@ -282,6 +283,7 @@ public class VendasPainel extends JPanel {
                             "Produto com o código " + codigoProduto + " não encontrado no estoque.");
                 }
             }
+
         
             private void adicionarProdutoATabela(String codigoProduto, String tag, String descricao, String quantidade,
                     String preco) {
