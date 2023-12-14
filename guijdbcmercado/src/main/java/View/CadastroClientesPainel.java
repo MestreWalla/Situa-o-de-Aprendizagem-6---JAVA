@@ -1,14 +1,19 @@
 package View;
 
 import Model.ListaClientes;
+import Model.ListaEstoque;
 import Connection.ClientesDAO;
+import Connection.EstoqueDAO;
 import Controller.ClientesControl;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CadastroClientesPainel extends JPanel {
 
@@ -24,8 +29,11 @@ public class CadastroClientesPainel extends JPanel {
     private JTextField enderecoClienteTextField;
     private JButton cadastrarClienteButton;
 
-    // Lista para armazenar clientes
-    private ArrayList<ListaClientes> listaClientes;
+   // Tabela Produtos
+    private List<ListaClientes> listaClientes;
+    private JTable table;
+    private DefaultTableModel tableModel;
+    private int linhaSelecionada = -1;
 
     public CadastroClientesPainel() {
         super();
@@ -33,8 +41,11 @@ public class CadastroClientesPainel extends JPanel {
         setLayout(new BorderLayout());
         // Font font = new Font("Arial Black", Font.PLAIN, 16);
 
-        // Inicializa a lista de clientes
-        listaClientes = new ArrayList<>();
+        // Configuração da tabela
+        String[] columnNames = { "Código", "Tag", "Descrição", "Quantidade", "Preço" };
+        tableModel = new DefaultTableModel(columnNames, 0);
+        table = new JTable(tableModel);
+        atualizarTabela();
 
         // Componentes iniciais
         nomeClienteLabel = new JLabel("Nome:");
@@ -121,6 +132,15 @@ public class CadastroClientesPainel extends JPanel {
         enderecoClienteTextField.setText("");
 
 
+    }
+    private void atualizarTabela() {
+        tableModel.setRowCount(0);
+        listaClientes = new ClientesDAO().listarTodos();
+        for (ListaClientes produto : listaClientes) {
+            tableModel.addRow(new Object[] {
+                    produto.getCodigo(), produto.getTag(), produto.getDescricao(), produto.getQuantidade(),
+                    produto.getPreco() });
+        }
     }
 
     // public static void main(String[] args) {
