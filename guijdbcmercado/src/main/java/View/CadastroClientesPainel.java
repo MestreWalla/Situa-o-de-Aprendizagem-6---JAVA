@@ -143,6 +143,15 @@ public class CadastroClientesPainel extends JPanel {
 
 
     }
+    private void atualizarTabela() {
+        tableModel.setRowCount(0);
+        listaClientes = new ClientesDAO().listarTodos();
+        for (ListaClientes produto : listaClientes) {
+            tableModel.addRow(new Object[] {
+                    produto.getCodigo(), produto.getTag(), produto.getDescricao(), produto.getQuantidade(),
+                    produto.getPreco() });
+        }
+    }
 
     // public static void main(String[] args) {
     // SwingUtilities.invokeLater(new Runnable() {
