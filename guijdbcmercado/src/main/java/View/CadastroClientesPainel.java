@@ -1,9 +1,7 @@
 package View;
 
 import Model.ListaClientes;
-import Model.ListaEstoque;
 import Connection.ClientesDAO;
-import Connection.EstoqueDAO;
 import Controller.ClientesControl;
 
 import javax.swing.*;
@@ -12,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CadastroClientesPainel extends JPanel {
@@ -140,29 +137,5 @@ public class CadastroClientesPainel extends JPanel {
         emailClienteTextField.setText("");
         telefoneClienteTextField.setText("");
         enderecoClienteTextField.setText("");
-
-
     }
-    private void atualizarTabela() {
-        tableModel.setRowCount(0);
-        listaClientes = new ClientesDAO().listarTodos();
-        for (ListaClientes produto : listaClientes) {
-            tableModel.addRow(new Object[] {
-                    produto.getCodigo(), produto.getTag(), produto.getDescricao(), produto.getQuantidade(),
-                    produto.getPreco() });
-        }
-    }
-
-    // public static void main(String[] args) {
-    // SwingUtilities.invokeLater(new Runnable() {
-    // @Override
-    // public void run() {
-    // JFrame frame = new JFrame();
-    // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    // frame.getContentPane().add(new CadastroPainel());
-    // frame.setSize(400, 300);
-    // frame.setVisible(true);
-    // }
-    // });
-    // }
 }
