@@ -262,13 +262,18 @@ public class VendasPainel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String codigoProduto = textFieldProduto.getText();
-
+        
                 // Verifica se o produto com o código informado está no estoque
                 if (produtoExisteNoEstoque(codigoProduto)) {
                     // Lógica para adicionar o produto à tabela de vendas
                     // (Você precisará implementar essa lógica)
-                    adicionarProdutoATabela(codigoProduto);
-
+                    String tag = ""; // Coloque a lógica para obter a tag do produto
+                    String descricao = obterDescricaoProduto(codigoProduto);
+                    String quantidade = textFieldQuantidade.getText();
+                    String preco = obterPrecoProduto(codigoProduto);
+        
+                    adicionarProdutoATabela(codigoProduto, tag, descricao, quantidade, preco);
+        
                     // Limpa os campos após adicionar à tabela
                     textFieldProduto.setText("");
                     textFieldQuantidade.setText("");
@@ -277,9 +282,14 @@ public class VendasPainel extends JPanel {
                             "Produto com o código " + codigoProduto + " não encontrado no estoque.");
                 }
             }
-
-            private void adicionarProdutoATabela(String codigo, String tag, String descricao, String quantidade,
+        
+            private void adicionarProdutoATabela(String codigoProduto, String tag, String descricao, String quantidade,
                     String preco) {
+                // Adiciona os dados à tabela
+                tableModel.addRow(new Object[] { codigoProduto, tag, descricao, quantidade, preco });
+
+                // Atualiza a tabela
+                table.setModel(tableModel);
             }
 
             private String obterDescricaoProduto(String codigo) {
@@ -321,6 +331,7 @@ public class VendasPainel extends JPanel {
 
         tableModel.addRow(new Object[] { codigoProduto, descricao, quantidade, preco });
     }
+
     private String obterDescricaoProduto(String codigoProduto) {
         // Substitua este exemplo pela lógica real para obter a descrição do produto no
         // seu sistema
@@ -333,26 +344,26 @@ public class VendasPainel extends JPanel {
             return "Descrição não encontrada";
         }
     }
-    
+
     private String obterNomeCliente() {
         // Substitua este exemplo pela lógica real para obter o nome do cliente no seu
         // sistema
         // Exemplo fictício:
         return "Nome do Cliente";
     }
-    
+
     private String obterNomeOperador() {
         // Substitua este exemplo pela lógica real para obter o nome do operador no seu
         // sistema
         // Exemplo fictício:
         return "Nome do Operador";
     }
-    
+
     private String obterDataHoraAtual() {
         // Utiliza a classe SimpleDateFormat para obter a data e hora atual
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date dataHoraAtual = new Date();
         return sdf.format(dataHoraAtual);
     }
-    
+
 }
