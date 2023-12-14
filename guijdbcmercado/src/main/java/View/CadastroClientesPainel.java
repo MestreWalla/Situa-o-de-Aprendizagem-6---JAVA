@@ -1,8 +1,10 @@
 package View;
 
 import Model.ListaClientes;
+import Model.ListaClientes;
 import Connection.ClientesDAO;
-import Controller.ClientesControl;
+import Connection.ClientesDAO;
+import Controller.clientesControl;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -26,7 +28,7 @@ public class CadastroClientesPainel extends JPanel {
     private JTextField enderecoClienteTextField;
     private JButton cadastrarClienteButton;
 
-    // Tabela Produtos
+    // Tabela clientes
     private List<ListaClientes> listaClientes;
     private JTable table;
     private DefaultTableModel tableModel;
@@ -57,6 +59,9 @@ public class CadastroClientesPainel extends JPanel {
         enderecoClienteTextField = new JTextField(20);
         cadastrarClienteButton = new JButton("Cadastrar");
 
+        JScrollPane scrollPane = new JScrollPane(table);
+        add(scrollPane, BorderLayout.SOUTH);
+
         JPanel formPanel = new JPanel(new GridLayout(6, 2));
         formPanel.add(nomeClienteLabel);
         formPanel.add(nomeClienteTextField);
@@ -73,9 +78,6 @@ public class CadastroClientesPainel extends JPanel {
 
         add(formPanel, BorderLayout.CENTER);
 
-        // Criar as tabelas
-        new ClientesDAO().criarTabela();
-
         // Adiciona listener aos botões de cadastrar
         cadastrarClienteButton.addActionListener(new ActionListener() {
             @Override
@@ -83,40 +85,6 @@ public class CadastroClientesPainel extends JPanel {
                 cadastrarCliente();
             }
         });
-    }
-
-    private void atualizarTabela() {
-        tableModel.setRowCount(0);
-        listaClientes = new ClientesDAO().listarTodos();
-        for (ListaClientes produto : listaClientes) {
-            tableModel.addRow(new Object[] {
-                    produto.getNome(), produto.getCpf(), produto.getEmail(), produto.getTelefone(),
-                    produto.getEndereco() });
-        }
-    }
-
-    private void atualizarFormularioCliente() {
-        ajustarLayout(true);
-        revalidate();
-        repaint();
-    }
-
-    // Método para configurar a visibilidade dos componentes e ajustar o layout
-    private void ajustarLayout(boolean clienteVisible) {
-        nomeClienteLabel.setVisible(clienteVisible);
-        nomeClienteTextField.setVisible(clienteVisible);
-        cpfClienteLabel.setVisible(clienteVisible);
-        cpfClienteTextField.setVisible(clienteVisible);
-        emailClienteLabel.setVisible(clienteVisible);
-        emailClienteTextField.setVisible(clienteVisible);
-        telefoneClienteLabel.setVisible(clienteVisible);
-        telefoneClienteTextField.setVisible(clienteVisible);
-        enderecoClienteLabel.setVisible(clienteVisible);
-        enderecoClienteTextField.setVisible(clienteVisible);
-        cadastrarClienteButton.setVisible(clienteVisible);
-
-        revalidate();
-        repaint();
     }
 
     private void cadastrarCliente() {
@@ -127,9 +95,13 @@ public class CadastroClientesPainel extends JPanel {
         String telefone = telefoneClienteTextField.getText();
         String endereco = enderecoClienteTextField.getText();
 
-        // Cria um novo cliente e adiciona à lista
-        // Aqui você precisa fornecer a instância correta para ClientesControl
-        new ClientesControl(listaClientes, null, null).cadastrar(nome, cpf, email, telefone, endereco);
+        // Cria uma instância do DAO e cadastra o cliente no banco de dados
+        ClientesDAO clientesDAO = new ClientesDAO();
+        clientesDAO.cadastrar(nome, cpf, email, telefone, endereco);
+
+        // Adiciona uma nova linha à tabela com os dados do cliente cadastrado
+        Object[] rowCpf = { nome, cpf, email, telefone, endereco };
+        tableModel.addRow(rowCpf);
 
         // Limpa os campos do formulário
         nomeClienteTextField.setText("");
@@ -137,5 +109,19 @@ public class CadastroClientesPainel extends JPanel {
         emailClienteTextField.setText("");
         telefoneClienteTextField.setText("");
         enderecoClienteTextField.setText("");
+    }
+
+    public List<ListaClientes> getListaClientes() {
+        return listaClientes;
+    }
+
+    private void atualizarTabela() {
+        tableModel.setRowCount(0);
+        listaClientes = new ClientesDAO().listarTodos();
+        for (ListaClientes cliente : listaClientes) {
+            tableModel.addRow(new Object[] {
+                    cliente.getNome(), cliente.getCpf(), cliente.getEmail(), cliente.getTelefone(),
+                    cliente.getEndereco() });
+        }
     }
 }
