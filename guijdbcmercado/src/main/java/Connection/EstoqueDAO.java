@@ -23,7 +23,7 @@ public class EstoqueDAO {
 
     public void criarTabela() {
         String sql = "CREATE TABLE IF NOT EXISTS ESTOQUE_MERCADO(" +
-        "CODIGO SERIAL PRIMARY KEY, " +
+        "CODIGO INT PRIMARY KEY, " +
         "TAG VARCHAR(255), " +
         "DESCRICAO VARCHAR(255), " +
         "QUANTIDADE INT, " +
