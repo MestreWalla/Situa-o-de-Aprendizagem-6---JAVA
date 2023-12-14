@@ -270,7 +270,7 @@ public class VendasPainel extends JPanel {
                 if (produtoExiste(Integer.parseInt(codigo))) {
                     String descricao = obterDescricaoProduto(codigo);
                     String quantidade = textFieldQuantidade.getText();
-                    String preco = obterPrecoProduto(codigo);
+                    String preco = obterDescricaoProduto(codigo);
         
                     // Adiciona à tabela
                     adicionarProdutoATabela(codigo, tag, descricao, quantidade, preco);
@@ -281,6 +281,18 @@ public class VendasPainel extends JPanel {
                 } else {
                     JOptionPane.showMessageDialog(null, "Produto com o código " + codigo + " não encontrado no estoque.");
                 }
+            }
+
+            private void adicionarProdutoATabela(String codigo, String tag, String descricao, String quantidade,
+                    String preco) {
+            }
+
+            private String obterDescricaoProduto(String codigo) {
+                return null;
+            }
+
+            private boolean produtoExiste(int int1) {
+                return false;
             }
         });
     }

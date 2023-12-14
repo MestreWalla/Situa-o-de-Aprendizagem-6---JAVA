@@ -22,7 +22,12 @@ public class EstoqueDAO {
     }
 
     public void criarTabela() {
-        String sql = "CREATE TABLE IF NOT EXISTS ESTOQUE_MERCADO(CODIGO INT AUTO_INCREMENT PRIMARY KEY, TAG VARCHAR(255), DESCRICAO VARCHAR(255), QUANTIDADE INT, PRECO DOUBLE)";
+        String sql = "CREATE TABLE IF NOT EXISTS ESTOQUE_MERCADO(" +
+        "CODIGO SERIAL PRIMARY KEY, " +
+        "TAG VARCHAR(255), " +
+        "DESCRICAO VARCHAR(255), " +
+        "QUANTIDADE INT, " +
+        "PRECO DOUBLE PRECISION)";
         try (Statement stmt = this.conexao.createStatement()) {
             stmt.execute(sql);
             System.out.println("(ESTOQUE) - Tabela criada com sucesso.");

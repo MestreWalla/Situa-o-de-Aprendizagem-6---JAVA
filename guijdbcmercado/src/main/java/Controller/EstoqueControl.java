@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Connection.ClientesDAO;
 import Connection.EstoqueDAO;
 import Model.ListaEstoque;
 
@@ -25,26 +26,23 @@ public class EstoqueControl {
         produtos = new EstoqueDAO().listarTodos();
         for (ListaEstoque produto : produtos) {
             tableModel.addRow(new Object[] {
-                    produto.getCodigo(), produto.getTag(), produto.getDescricao(), produto.getQuantidade(), produto.getPreco() });
+                    produto.getCodigo(), produto.getTag(), produto.getDescricao(), produto.getQuantidade(),
+                    produto.getPreco() });
         }
     }
 
-    private boolean confirmacaoDialog(String mensagem) {
+    public void cadastrar(int codigo, String tag, String descricao, int quantidade, double preco) {
         Object[] options = { "NÃO", "SIM" };
         int acao = JOptionPane.showOptionDialog(
                 null,
-                mensagem,
+                "Deseja cadastrar novo produto?",
                 "Confirmação",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.WARNING_MESSAGE,
                 null,
                 options,
                 options[0]);
-        return acao == 1;
-    }
-
-    public void cadastrar(int codigo, String tag, String descricao, int quantidade, double preco) {
-        if (confirmacaoDialog("Deseja cadastrar novo veiculo?")) {
+        if (acao == 1) {
             new EstoqueDAO().cadastrar(codigo, tag, descricao, quantidade, preco);
             atualizarTabela();
             JOptionPane.showMessageDialog(null, "Cadastro concluido com sucesso");
@@ -59,9 +57,21 @@ public class EstoqueControl {
     }
 
     public void excluir(int codigo) {
-        if (confirmacaoDialog("Tem Certeza que deseja Excluir?")) {
+        Object[] options = { "NÃO", "SIM" };
+        int acao = JOptionPane.showOptionDialog(
+                null,
+                "Tem Certeza de que deseja excluir o esse produto?",
+                "Confirmação",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        if (acao == 1) {
             new EstoqueDAO().apagar(codigo);
-            atualizarTabela();
+            // Chama o método de exclusão no banco de dados
+            // atualizarTabela(); // Atualiza a tabela de exibição após a exclusão
             JOptionPane.showMessageDialog(null, "Cadastro excluido");
         } else {
             JOptionPane.showMessageDialog(null, "Ação cancelada");
