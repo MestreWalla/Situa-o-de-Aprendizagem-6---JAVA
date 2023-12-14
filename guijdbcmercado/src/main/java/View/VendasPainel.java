@@ -39,6 +39,11 @@ public class VendasPainel extends JPanel {
     private JLabel labelDataHora;
     private JLabel labelCliente;
 
+    private static final String COL_CODIGO = "Código";
+    private static final String COL_DESCRICAO = "Descrição";
+    private static final String COL_QUANTIDADE = "Quantidade";
+    private static final String COL_PRECO = "Preço";
+
     public VendasPainel() {
         super();
         // Configuração do layout do painel
@@ -119,7 +124,7 @@ public class VendasPainel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         inputPanel.add(textFieldQuantidade, gbc);
 
-        //Descriçoes de Usuario, Data e Hora
+        // Descriçoes de Usuario, Data e Hora
         labelCliente = new JLabel("Nome do(a) Cliente(a): " + obterNomeCliente());
         labelCliente.setFont(font);
         gbc.gridx = 0;
@@ -131,11 +136,11 @@ public class VendasPainel extends JPanel {
         int paddingRightCliente = 5;
         labelCliente.setBorder(BorderFactory.createCompoundBorder(
                 labelCliente.getBorder(),
-                BorderFactory.createEmptyBorder(paddingTopCliente, paddingLeftCliente, paddingBottomCliente, paddingRightCliente)));
+                BorderFactory.createEmptyBorder(paddingTopCliente, paddingLeftCliente, paddingBottomCliente,
+                        paddingRightCliente)));
         inputPanel.add(labelCliente, gbc);
 
-
-        //Descriçoes de Usuario, Data e Hora
+        // Descriçoes de Usuario, Data e Hora
         labelOperador = new JLabel("Nome do(a) Operador(a): " + obterNomeOperador());
         labelOperador.setFont(font);
         gbc.gridx = 0;
@@ -165,10 +170,9 @@ public class VendasPainel extends JPanel {
 
         inputPanel.add(labelDataHora, gbc);
 
-
         // Configuração do botaoAdicionar
         botaoAdicionar = new JButton("Adicionar à Carrinho");
-        botaoAdicionar.setBackground(new Color(167, 254, 180));  // Cor verde RGB
+        botaoAdicionar.setBackground(new Color(167, 254, 180)); // Cor verde RGB
         botaoAdicionar.setFont(font);
         ImageIcon iconAdicionar = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Produto.png");
         Image ImageAdicionar = iconAdicionar.getImage();
@@ -192,11 +196,6 @@ public class VendasPainel extends JPanel {
 
         // Adiciona o inputPanel ao painel principal
         add(inputPanel, BorderLayout.WEST);
-
-        // Área de exibição do carrinho (no centro)
-        // areaCarrinho = new JTextArea(55, 30);
-        // JScrollPane scrollPane = new JScrollPane(areaCarrinho);
-        // add(scrollPane, BorderLayout.CENTER);
 
         // tabela de carros
         JScrollPane jSPane = new JScrollPane();
@@ -262,45 +261,86 @@ public class VendasPainel extends JPanel {
         botaoAdicionar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Obtém dados do produto e quantidade
-                String codigo = textFieldProduto.getText();
-                String tag = textFieldQuantidade.getText();
-        
-                // Verifica se o produto com o código informado existe no estoque
-                if (produtoExiste(Integer.parseInt(codigo))) {
-                    String descricao = obterDescricaoProduto(codigo);
-                    String quantidade = textFieldQuantidade.getText();
-                    String preco = obterPrecoProduto(codigo);
-        
-                    // Adiciona à tabela
-                    adicionarProdutoATabela(codigo, tag, descricao, quantidade, preco);
-        
+                String codigoProduto = textFieldProduto.getText();
+
+                // Verifica se o produto com o código informado está no estoque
+                if (produtoExisteNoEstoque(codigoProduto)) {
+                    // Lógica para adicionar o produto à tabela de vendas
+                    // (Você precisará implementar essa lógica)
+                    adicionarProdutoATabela(codigoProduto);
+
                     // Limpa os campos após adicionar à tabela
                     textFieldProduto.setText("");
                     textFieldQuantidade.setText("");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Produto com o código " + codigo + " não encontrado no estoque.");
+                    JOptionPane.showMessageDialog(null,
+                            "Produto com o código " + codigoProduto + " não encontrado no estoque.");
                 }
             }
         });
     }
 
+    // Método para verificar se o produto existe no estoque
+    private boolean produtoExisteNoEstoque(String codigoProduto) {
+        // Implemente a lógica adequada aqui (por exemplo, chamando métodos do seu DAO)
+        // Retorne true se existir, false caso contrário
+        return VendasControl.produtoExiste(codigoProduto);
+    }
+
+    private String obterPrecoProduto(String codigoProduto) {
+        // Substitua este exemplo pela lógica real para obter o preço do produto no seu
+        // sistema
+        // Exemplo fictício:
+        if ("1".equals(codigoProduto)) {
+            return "10.00"; // Preço do Produto A
+        } else if ("2".equals(codigoProduto)) {
+            return "20.00"; // Preço do Produto B
+        } else {
+            return "Preço não encontrado";
+        }
+    }
+
+    private void adicionarProdutoATabela(String codigoProduto) {
+        // Adiciona os dados à tabela (Você precisará implementar essa lógica)
+        // Exemplo:
+        String descricao = obterDescricaoProduto(codigoProduto);
+        String quantidade = textFieldQuantidade.getText();
+        String preco = obterPrecoProduto(codigoProduto);
+
+        tableModel.addRow(new Object[] { codigoProduto, descricao, quantidade, preco });
+    }
+    private String obterDescricaoProduto(String codigoProduto) {
+        // Substitua este exemplo pela lógica real para obter a descrição do produto no
+        // seu sistema
+        // Exemplo fictício:
+        if ("1".equals(codigoProduto)) {
+            return "Produto A";
+        } else if ("2".equals(codigoProduto)) {
+            return "Produto B";
+        } else {
+            return "Descrição não encontrada";
+        }
+    }
+    
     private String obterNomeCliente() {
-        return "Nome do Cliente"  + "\n" + "Cliente VIP";
+        // Substitua este exemplo pela lógica real para obter o nome do cliente no seu
+        // sistema
+        // Exemplo fictício:
+        return "Nome do Cliente";
     }
-
-    private String obterDataHoraAtual() {
-        SimpleDateFormat formatoDataHora = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date agora = new Date();
-        return formatoDataHora.format(agora);
-    }
-
+    
     private String obterNomeOperador() {
+        // Substitua este exemplo pela lógica real para obter o nome do operador no seu
+        // sistema
+        // Exemplo fictício:
         return "Nome do Operador";
     }
-
-    // Exemplo de método para limpar o carrinho (pode ser usado conforme necessário)
-    public void limparCarrinho() {
-        // areaCarrinho.setText("");
+    
+    private String obterDataHoraAtual() {
+        // Utiliza a classe SimpleDateFormat para obter a data e hora atual
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date dataHoraAtual = new Date();
+        return sdf.format(dataHoraAtual);
     }
+    
 }
