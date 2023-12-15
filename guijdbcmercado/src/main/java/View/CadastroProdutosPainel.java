@@ -4,6 +4,7 @@ import Connection.EstoqueDAO;
 import Model.ListaEstoque;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -80,6 +81,38 @@ public class CadastroProdutosPainel extends JPanel {
                 cadastrarProduto();
             }
         });
+        // Obtém o modelo da tabela
+    DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            // Obtém a componente da célula
+            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            // Obtém o valor da coluna "Quantidade"
+            int quantidade = Integer.parseInt(table.getValueAt(row, 3).toString());
+
+            // Define a cor de fundo com base na quantidade
+            if (quantidade < 10) {
+                c.setBackground(new Color(235, 145, 145));
+                c.setForeground(Color.WHITE); // Altera a cor do texto para branco para melhor visibilidade
+            } else {
+                // Restaura as cores padrão
+                c.setBackground(table.getBackground());
+                c.setForeground(table.getForeground());
+            }
+
+            return c;
+        }
+    };
+
+    // Aplica o renderizador à coluna "Quantidade"
+    table.getColumnModel().getColumn(0).setCellRenderer(renderer);
+    table.getColumnModel().getColumn(1).setCellRenderer(renderer);
+    table.getColumnModel().getColumn(2).setCellRenderer(renderer);
+    table.getColumnModel().getColumn(3).setCellRenderer(renderer);
+    table.getColumnModel().getColumn(4).setCellRenderer(renderer);
+
     }
 
     private void cadastrarProduto() {

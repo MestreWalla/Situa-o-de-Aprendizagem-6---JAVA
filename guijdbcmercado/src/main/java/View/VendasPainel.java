@@ -6,16 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import Controller.VendasControl;
-
 import Model.ListaEstoque;
-import Model.ListaFuncionarios;
 import Connection.EstoqueDAO;
-import View.JanelaLogin;
 
 public class VendasPainel extends JPanel {
 
@@ -27,7 +22,6 @@ public class VendasPainel extends JPanel {
     private JLabel labelQuantidade;
     private JTextField textFieldQuantidade;
     private JButton botaoAdicionar;
-    // private JTextArea areaCarrinho;
 
     private JTable table;
     private DefaultTableModel tableModel;
@@ -339,7 +333,7 @@ public class VendasPainel extends JPanel {
     }
 
     private String obterNomeCliente() {
-        
+
         return "Nome do Cliente";
     }
 
@@ -350,9 +344,6 @@ public class VendasPainel extends JPanel {
             return "Operador Desconhecido";
         }
     }
-    
-    
-    
 
     private String obterDataHoraAtual() {
         // Utiliza a classe SimpleDateFormat para obter a data e hora atual
