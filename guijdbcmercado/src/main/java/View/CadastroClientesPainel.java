@@ -1,11 +1,7 @@
 package View;
 
 import Model.ListaClientes;
-import Model.ListaClientes;
 import Connection.ClientesDAO;
-import Connection.ClientesDAO;
-import Controller.clientesControl;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
