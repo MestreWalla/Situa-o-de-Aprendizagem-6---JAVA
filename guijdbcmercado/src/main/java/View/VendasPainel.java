@@ -12,7 +12,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.VendasControl;
-import Connection.VendasDAO;
 import Model.ListaVendas;
 
 public class VendasPainel extends JPanel {
