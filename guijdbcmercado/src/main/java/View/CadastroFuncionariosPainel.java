@@ -2,12 +2,15 @@ package View;
 
 import Model.ListaFuncionarios;
 import Connection.FuncionariosDAO;
+import Controller.FuncionariosControl;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
 public class CadastroFuncionariosPainel extends JPanel {
 
@@ -23,8 +26,11 @@ public class CadastroFuncionariosPainel extends JPanel {
     private JTextField enderecoFuncionarioTextField;
     private JButton cadastrarFuncionarioButton;
 
-    // Lista para armazenar funcionários
-    private ArrayList<ListaFuncionarios> listaFuncionarios;
+    // Tabela Produtos
+    private List<ListaFuncionarios> listaFuncionarios;
+    private JTable table;
+    private DefaultTableModel tableModel;
+    private int linhaSelecionada = -1;
 
     public CadastroFuncionariosPainel() {
         super();
@@ -32,8 +38,11 @@ public class CadastroFuncionariosPainel extends JPanel {
         setLayout(new BorderLayout());
         // Font font = new Font("Arial Black", Font.PLAIN, 16);
 
-        // Inicializa a lista de funcionários
-        listaFuncionarios = new ArrayList<>();
+        // Configuração da tabela
+        String[] columnNames = { "Nome", "CPF", "Email", "Telefone", "Endereço" };
+        tableModel = new DefaultTableModel(columnNames, 0);
+        table = new JTable(tableModel);
+        atualizarTabela();
 
         // Componentes iniciais
         nomeFuncionarioLabel = new JLabel("Nome:");
@@ -76,6 +85,16 @@ public class CadastroFuncionariosPainel extends JPanel {
         });
     }
 
+    private void atualizarTabela() {
+         tableModel.setRowCount(0);
+        listaFuncionarios = new FuncionariosDAO().listarTodos();
+        for (ListaFuncionarios produto : listaFuncionarios) {
+            tableModel.addRow(new Object[] {
+                    produto.getNome(), produto.getCpf(), produto.getEmail(), produto.getTelefone(),
+                    produto.getEndereco() });
+        }
+    }
+
     private void cadastrarFuncionario() {
         // Obtém os dados do formulário
         String nome = nomeFuncionarioTextField.getText();
@@ -85,8 +104,9 @@ public class CadastroFuncionariosPainel extends JPanel {
         String endereco = enderecoFuncionarioTextField.getText();
 
         // Cria um novo Funcionário e adiciona à lista
-        ListaFuncionarios novoFuncionario = new ListaFuncionarios(nome, cpf, email, telefone, endereco);
-        listaFuncionarios.add(novoFuncionario);
+        // Aqui você precisa fornecer a instância correta para ClientesControl
+        new FuncionariosControl(listaFuncionarios, null, null).cadastrar(nome, cpf, email, telefone, endereco);
+
 
         // Limpa os campos do formulário
         nomeFuncionarioTextField.setText("");
