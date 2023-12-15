@@ -73,6 +73,9 @@ public class CadastroClientesPainel extends JPanel {
 
         add(formPanel, BorderLayout.CENTER);
 
+        // Criar as tabelas
+        new ClientesDAO().criarTabela();
+
         // Adiciona listener aos botões de cadastrar
         cadastrarClienteButton.addActionListener(new ActionListener() {
             @Override
@@ -104,6 +107,7 @@ public class CadastroClientesPainel extends JPanel {
         emailClienteTextField.setText("");
         telefoneClienteTextField.setText("");
         enderecoClienteTextField.setText("");
+        atualizarTabela();
     }
 
     public List<ListaClientes> getListaClientes() {

@@ -19,6 +19,7 @@ public class EstoqueDAO {
     public EstoqueDAO() {
         this.conexao = ConnectionFactory.getConnection();
         criarTabela();  // Chama o método de criação da tabela no construtor
+        produtos = listarTodos();
     }
 
     public void criarTabela() {
@@ -83,7 +84,12 @@ public class EstoqueDAO {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "(ESTOQUE) - Erro ao atualizar dados no banco de dados");
         }
-    }  
+    }
+
+    // Adiciona o método para obter a lista de produtos
+    public List<ListaEstoque> getListaEstoque() {
+        return produtos;
+    }
 
     public void apagar(int codigo) {
         if (produtoExiste(codigo)) {

@@ -13,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.VendasControl;
 import Model.ListaVendas;
+import Model.ListaEstoque;
+import Connection.EstoqueDAO;
 
 public class VendasPainel extends JPanel {
 
@@ -25,7 +27,7 @@ public class VendasPainel extends JPanel {
     private JTextField textFieldQuantidade;
     private JButton botaoAdicionar;
     // private JTextArea areaCarrinho;
-    
+
     private List<ListaVendas> vendas;
     private JTable table;
     private DefaultTableModel tableModel;
@@ -39,16 +41,24 @@ public class VendasPainel extends JPanel {
     private JLabel labelDataHora;
     private JLabel labelCliente;
 
+    
+
+
     private static final String COL_CODIGO = "Código";
     private static final String COL_DESCRICAO = "Descrição";
     private static final String COL_QUANTIDADE = "Quantidade";
-    private static final String COL_PRECO = "Preço";
+    private static final String COL_PRECO = "Preco";
+
+    private EstoqueDAO estoqueDAO;
+
 
     public VendasPainel() {
         super();
         // Configuração do layout do painel
         setLayout(new BorderLayout());
         Font font = new Font("Arial Black", Font.PLAIN, 16);
+
+        EstoqueDAO estoqueDAO = new EstoqueDAO();
 
         // Panel para o input (à esquerda)
         JPanel inputPanel = new JPanel();
@@ -258,49 +268,52 @@ public class VendasPainel extends JPanel {
         add(botoesPanel, BorderLayout.SOUTH);
 
         // Adiciona ação ao botão Adicionar à Carrinho
-        botaoAdicionar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String codigoProduto = textFieldProduto.getText();
-        
-                // Verifica se o produto com o código informado está no estoque
-                if (produtoExisteNoEstoque(codigoProduto)) {
-                    // Lógica para adicionar o produto à tabela de vendas
-                    // (Você precisará implementar essa lógica)
-                    String tag = ""; // Coloque a lógica para obter a tag do produto
-                    String descricao = obterDescricaoProduto(codigoProduto);
-                    String quantidade = textFieldQuantidade.getText();
-                    String preco = obterPrecoProduto(codigoProduto);
-        
-                    adicionarProdutoATabela(codigoProduto, tag, descricao, quantidade, preco);
-        
-                    // Limpa os campos após adicionar à tabela
-                    textFieldProduto.setText("");
-                    textFieldQuantidade.setText("");
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            "Produto com o código " + codigoProduto + " não encontrado no estoque.");
+        // Adiciona ação ao botão Adicionar à Carrinho
+    botaoAdicionar.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String codigoProduto = textFieldProduto.getText();
+
+            // Verifica se o produto com o código informado está no estoque
+            ListaEstoque produto = obterProdutoPorCodigo(codigoProduto);
+            
+            if (produto != null) {
+                // Lógica para adicionar o produto à tabela de vendas
+                String tag = produto.getTag();
+                String descricao = produto.getDescricao();
+                String quantidade = textFieldQuantidade.getText();
+                String preco = String.valueOf(produto.getPreco());
+
+                adicionarProdutoATabela(codigoProduto, tag, descricao, quantidade, preco);
+
+                // Limpa os campos após adicionar à tabela
+                textFieldProduto.setText("");
+                textFieldQuantidade.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Produto com o código " + codigoProduto + " não encontrado no estoque.");
+            }
+        }
+
+        // Método para obter um produto da lista de estoque pelo código
+        private ListaEstoque obterProdutoPorCodigo(String codigoProduto) {
+            // Agora você pode usar estoqueDAO.getListaEstoque() aqui
+            for (ListaEstoque produto : estoqueDAO.getListaEstoque()) {
+                if (Integer.toString(produto.getCodigo()).equals(codigoProduto)) {
+                    return produto;
                 }
             }
+            return null;
+        }
+    });}
 
-        
-            private void adicionarProdutoATabela(String codigoProduto, String tag, String descricao, String quantidade,
-                    String preco) {
-                // Adiciona os dados à tabela
-                tableModel.addRow(new Object[] { codigoProduto, tag, descricao, quantidade, preco });
+    private void adicionarProdutoATabela(String codigoProduto, String tag, String descricao, String quantidade,
+            String preco) {
+        // Adiciona os dados à tabela
+        tableModel.addRow(new Object[] { codigoProduto, tag, descricao, quantidade, preco });
 
-                // Atualiza a tabela
-                table.setModel(tableModel);
-            }
-
-            private String obterDescricaoProduto(String codigo) {
-                return null;
-            }
-
-            private boolean produtoExiste(int int1) {
-                return false;
-            }
-        });
+        // Atualiza a tabela
+        table.setModel(tableModel);
     }
 
     // Método para verificar se o produto existe no estoque

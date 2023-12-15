@@ -57,6 +57,9 @@ public class CadastroFuncionariosPainel extends JPanel {
         enderecoFuncionarioTextField = new JTextField(20);
         cadastrarFuncionarioButton = new JButton("Cadastrar");
 
+        JScrollPane scrollPane = new JScrollPane(table);
+        add(scrollPane, BorderLayout.SOUTH);
+
         JPanel formPanel = new JPanel(new GridLayout(6, 2));
         formPanel.add(nomeFuncionarioLabel);
         formPanel.add(nomeFuncionarioTextField);
@@ -114,6 +117,7 @@ public class CadastroFuncionariosPainel extends JPanel {
         emailFuncionarioTextField.setText("");
         telefoneFuncionarioTextField.setText("");
         enderecoFuncionarioTextField.setText("");
+        atualizarTabela();
 
         // Exibe uma mensagem de sucesso (ou faça o que for apropriado no seu contexto)
         JOptionPane.showMessageDialog(this, "Funcionário cadastrado com sucesso!");
