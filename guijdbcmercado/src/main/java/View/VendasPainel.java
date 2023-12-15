@@ -13,7 +13,9 @@ import javax.swing.table.DefaultTableModel;
 import Controller.VendasControl;
 
 import Model.ListaEstoque;
+import Model.ListaFuncionarios;
 import Connection.EstoqueDAO;
+import View.JanelaLogin;
 
 public class VendasPainel extends JPanel {
 
@@ -138,7 +140,7 @@ public class VendasPainel extends JPanel {
         inputPanel.add(labelCliente, gbc);
 
         // Descriçoes de Usuario, Data e Hora
-        labelOperador = new JLabel("Nome do(a) Operador(a): " + obterNomeOperador());
+        labelOperador = new JLabel("Nome do(a) Operador(a): " + obterNomeOperador(null));
         labelOperador.setFont(font);
         gbc.gridx = 0;
         gbc.gridy = 7;
@@ -255,7 +257,6 @@ public class VendasPainel extends JPanel {
         add(botoesPanel, BorderLayout.SOUTH);
 
         // Adiciona ação ao botão Adicionar à Carrinho
-        // Adiciona ação ao botão Adicionar à Carrinho
         botaoAdicionar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -306,15 +307,10 @@ public class VendasPainel extends JPanel {
 
     // Método para verificar se o produto existe no estoque
     private boolean produtoExisteNoEstoque(String codigoProduto) {
-        // Implemente a lógica adequada aqui (por exemplo, chamando métodos do seu DAO)
-        // Retorne true se existir, false caso contrário
         return VendasControl.produtoExiste(codigoProduto);
     }
 
     private String obterPrecoProduto(String codigoProduto) {
-        // Substitua este exemplo pela lógica real para obter o preço do produto no seu
-        // sistema
-        // Exemplo fictício:
         if ("1".equals(codigoProduto)) {
             return "10.00"; // Preço do Produto A
         } else if ("2".equals(codigoProduto)) {
@@ -325,8 +321,6 @@ public class VendasPainel extends JPanel {
     }
 
     private void adicionarProdutoATabela(String codigoProduto) {
-        // Adiciona os dados à tabela (Você precisará implementar essa lógica)
-        // Exemplo:
         String descricao = obterDescricaoProduto(codigoProduto);
         String quantidade = textFieldQuantidade.getText();
         String preco = obterPrecoProduto(codigoProduto);
@@ -335,9 +329,6 @@ public class VendasPainel extends JPanel {
     }
 
     private String obterDescricaoProduto(String codigoProduto) {
-        // Substitua este exemplo pela lógica real para obter a descrição do produto no
-        // seu sistema
-        // Exemplo fictício:
         if ("1".equals(codigoProduto)) {
             return "Produto A";
         } else if ("2".equals(codigoProduto)) {
@@ -348,18 +339,20 @@ public class VendasPainel extends JPanel {
     }
 
     private String obterNomeCliente() {
-        // Substitua este exemplo pela lógica real para obter o nome do cliente no seu
-        // sistema
-        // Exemplo fictício:
+        
         return "Nome do Cliente";
     }
 
-    private String obterNomeOperador() {
-        // Substitua este exemplo pela lógica real para obter o nome do operador no seu
-        // sistema
-        // Exemplo fictício:
-        return "Nome do Operador";
+    private String obterNomeOperador(JanelaLogin autenticar) {
+        if (autenticar != null) {
+            return null;
+        } else {
+            return "Operador Desconhecido";
+        }
     }
+    
+    
+    
 
     private String obterDataHoraAtual() {
         // Utiliza a classe SimpleDateFormat para obter a data e hora atual
