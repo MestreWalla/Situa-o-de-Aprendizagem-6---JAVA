@@ -196,7 +196,7 @@ public class VendasPainel extends JPanel {
         // Adiciona o inputPanel ao painel principal
         add(inputPanel, BorderLayout.WEST);
 
-        // tabela de carros
+        // tabela de produtos
         JScrollPane jSPane = new JScrollPane();
         add(jSPane);
         tableModel = new DefaultTableModel(new Object[][] {},
