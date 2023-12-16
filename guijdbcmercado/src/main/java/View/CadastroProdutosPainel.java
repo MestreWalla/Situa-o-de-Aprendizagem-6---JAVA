@@ -2,7 +2,6 @@ package View;
 
 import Connection.EstoqueDAO;
 import Model.ListaEstoque;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -10,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.text.NumberFormat;
 
 public class CadastroProdutosPainel extends JPanel {
 
@@ -82,25 +82,22 @@ public class CadastroProdutosPainel extends JPanel {
             }
         });
         // Obtém o modelo da tabela
-    DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-            // Obtém a componente da célula
-            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+            private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
 
-            // Obtém o valor da coluna "Quantidade"
-            int quantidade = Integer.parseInt(table.getValueAt(row, 3).toString());
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-            // Define a cor de fundo com base na quantidade
-            if (quantidade < 10) {
-                c.setBackground(new Color(235, 145, 145));
-                c.setForeground(Color.WHITE); // Altera a cor do texto para branco para melhor visibilidade
-            } else {
-                // Restaura as cores padrão
-                c.setBackground(table.getBackground());
-                c.setForeground(table.getForeground());
-            }
+                // Se estiver na coluna "Preço", formata como moeda
+                if (column == 4) {
+                    double preco = Double.parseDouble(value.toString());
+                    setText(currencyFormat.format(preco));
+                } else {
+                    // Se não estiver na coluna "Preço", apenas define o texto normalmente
+                    setText(value.toString());
+                }
 
             return c;
         }

@@ -6,9 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.NumberFormat;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import Controller.VendasControl;
 import Model.ListaEstoque;
 import Connection.EstoqueDAO;
 
@@ -27,6 +28,8 @@ public class VendasPainel extends JPanel {
     private DefaultTableModel tableModel;
     private int linhaSelecionada = -1;
 
+    private JLabel total;
+
     private JButton finalizarButton;
     private JButton removerButton;
     private JButton devolucaoButton;
@@ -40,6 +43,7 @@ public class VendasPainel extends JPanel {
         // Configuração do layout do painel
         setLayout(new BorderLayout());
         Font font = new Font("Arial Black", Font.PLAIN, 16);
+        Font fonteMaior = new Font("Arial Black", Font.PLAIN, 30); // Substitua 20 pelo tamanho desejado
 
         EstoqueDAO estoqueDAO = new EstoqueDAO();
 
@@ -177,7 +181,7 @@ public class VendasPainel extends JPanel {
         gbc.gridy = 9;
         gbc.gridwidth = 2; // Ocupa duas células
 
-        // Adiciona a margem ao botão
+        // Adicionar margem ao botão
         int topMargin = 10;
         int leftMargin = 10;
         int bottomMargin = 10;
@@ -194,14 +198,35 @@ public class VendasPainel extends JPanel {
         JScrollPane jSPane = new JScrollPane();
         add(jSPane);
         tableModel = new DefaultTableModel(new Object[][] {},
-                new String[] { "codigo", "tag", "Descrição", "Quantidade", "Preço" });
+                new String[] { "codigo", "Descrição", "Quantidade", "Valor Unitário", "Valor Total" });
         table = new JTable(tableModel);
         jSPane.setViewportView(table);
+
+        JPanel painelSuperior = new JPanel(new BorderLayout());
+        painelSuperior.setLayout(new GridLayout(1, 4));
+        painelSuperior.setPreferredSize(new Dimension(painelSuperior.getPreferredSize().width, 100));
+        total = new JLabel("Valor Total: ");
+        total.setFont(fonteMaior);
+
+        // Cria uma borda com margens para a fonte
+        int topMarginTotal = 0;
+        int leftMarginTotal = 10; // Ajuste conforme necessário
+        int bottomMarginTotal = 0;
+        int rightMarginTotal = 0;
+        Border margemFonte = new EmptyBorder(topMarginTotal, leftMarginTotal, bottomMarginTotal, rightMarginTotal);
+
+        // Aplica a nova fonte ao JLabel com a borda e alinhamento
+        total.setFont(fonteMaior);
+        total.setBorder(margemFonte);
+        total.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        painelSuperior.add(total);
 
         // Configuração do painel de botões (na parte inferior)
         JPanel botoesPanel = new JPanel();
         botoesPanel.setLayout(new GridLayout(1, 4));
         botoesPanel.setPreferredSize(new Dimension(botoesPanel.getPreferredSize().width, 100));
+        painelSuperior.add(botoesPanel, BorderLayout.SOUTH);
 
         // Configuração do botão finalizarButton
         finalizarButton = new JButton("Finalizar Venda (F1)");
@@ -249,6 +274,7 @@ public class VendasPainel extends JPanel {
 
         // Adiciona o painel de botões ao painel principal na parte inferior
         add(botoesPanel, BorderLayout.SOUTH);
+        add(painelSuperior, BorderLayout.NORTH);
 
         // Adiciona ação ao botão Adicionar à Carrinho
         botaoAdicionar.addActionListener(new ActionListener() {
@@ -261,12 +287,11 @@ public class VendasPainel extends JPanel {
 
                 if (produto != null) {
                     // Lógica para adicionar o produto à tabela de vendas
-                    String tag = produto.getTag();
                     String descricao = produto.getDescricao();
                     String quantidade = textFieldQuantidade.getText();
                     String preco = String.valueOf(produto.getPreco());
 
-                    adicionarProdutoATabela(codigoProduto, tag, descricao, quantidade, preco);
+                    adicionarProdutoATabela(codigoProduto, descricao, quantidade, preco);
 
                     // Limpa os campos após adicionar à tabela
                     textFieldProduto.setText("");
@@ -288,20 +313,65 @@ public class VendasPainel extends JPanel {
                 return null;
             }
         });
+
+        // Adiciona ação ao botão Logout
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+
+            // Método para obter um produto da lista de estoque pelo código
+            private ListaEstoque obterProdutoPorCodigo(String codigoProduto) {
+                // Agora você pode usar estoqueDAO.getListaEstoque() aqui
+                for (ListaEstoque produto : estoqueDAO.getListaEstoque()) {
+                    if (Integer.toString(produto.getCodigo()).equals(codigoProduto)) {
+                        return produto;
+                    }
+                }
+                return null;
+            }
+        });
     }
 
-    private void adicionarProdutoATabela(String codigoProduto, String tag, String descricao, String quantidade,
-            String preco) {
-        // Adiciona os dados à tabela
-        tableModel.addRow(new Object[] { codigoProduto, tag, descricao, quantidade, preco });
+    private void adicionarProdutoATabela(String codigoProduto, String descricao, String quantidade, String preco) {
+        // Converte os valores para double
+        double quantidadeDouble = Double.parseDouble(quantidade);
+        double precoDouble = Double.parseDouble(preco);
+
+        // Calcula o valor total para o produto
+        double valorTotalProduto = quantidadeDouble * precoDouble;
+
+        // Formata os valores como moeda (R$)
+        NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance();
+        String precoFormatado = formatoMoeda.format(precoDouble);
+        String valorTotalFormatado = formatoMoeda.format(valorTotalProduto);
+
+        // Adiciona os dados à tabela, incluindo os valores formatados
+        tableModel.addRow(new Object[] { codigoProduto, descricao, quantidade, precoFormatado, valorTotalFormatado });
 
         // Atualiza a tabela
         table.setModel(tableModel);
+
+        // Calcula e atualiza o valor total
+        atualizarValorTotal();
     }
 
-    // Método para verificar se o produto existe no estoque
-    private boolean produtoExisteNoEstoque(String codigoProduto) {
-        return VendasControl.produtoExiste(codigoProduto);
+    // Método para calcular e atualizar o valor total
+    private void atualizarValorTotal() {
+        double valorTotal = 0.0;
+
+        // Itera sobre as linhas da tabela
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            // Obtém o valor da coluna "Valor Total"
+            String valorTotalStr = tableModel.getValueAt(i, 4).toString(); // Corrigido para index 4
+
+            // Converte o valor para double e adiciona ao valor total
+            valorTotal += Double.parseDouble(valorTotalStr.replace("R$", "").replace(",", ".")); // Tratamento para
+                                                                                                 // formatos de moeda
+        }
+        // Atualiza o rótulo total
+        total.setText("Valor Total: " + String.format("R$ %.2f", valorTotal)); // Adicionado formato para moeda
     }
 
     private String obterPrecoProduto(String codigoProduto) {
