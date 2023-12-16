@@ -121,4 +121,7 @@ public class ClientesDAO {
             ConnectionFactory.closeConnection(connection, stmt);
         }
     }
+    public ListaClientes obterClientePorCPF(String cpf) {
+        return null;
+    }
 }

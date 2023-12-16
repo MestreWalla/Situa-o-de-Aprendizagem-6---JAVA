@@ -9,8 +9,13 @@ import java.util.Date;
 import java.text.NumberFormat;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+
+import Model.ListaClientes;
 import Model.ListaEstoque;
+import Connection.ClientesDAO;
 import Connection.EstoqueDAO;
 
 public class VendasPainel extends JPanel {
@@ -77,12 +82,32 @@ public class VendasPainel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         inputPanel.add(textFieldCpf, gbc);
 
+        // Adiciona um ouvinte de evento ao textFieldCpf
+        textFieldCpf.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                atualizarLabelCliente();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                atualizarLabelCliente();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                atualizarLabelCliente();
+            }
+        });
+
         // Configuração do labelProduto
         labelProduto = new JLabel("Codigo do Produto:");
         labelProduto.setFont(font);
+
         ImageIcon iconProduto = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Barcode.png");
         Image ImageProduto = iconProduto.getImage();
-        Image scaledImageProduto = ImageProduto.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
+        Image scaledImageProduto = ImageProduto.getScaledInstance(100, -1,
+                Image.SCALE_SMOOTH);
         iconProduto = new ImageIcon(scaledImageProduto);
         labelProduto.setIconTextGap(30);
         labelProduto.setIcon(iconProduto);
@@ -104,7 +129,8 @@ public class VendasPainel extends JPanel {
         labelQuantidade.setFont(font);
         ImageIcon iconQuantidade = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Quantidade.png");
         Image ImageQuantidade = iconQuantidade.getImage();
-        Image scaledImageQuantidade = ImageQuantidade.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
+        Image scaledImageQuantidade = ImageQuantidade.getScaledInstance(100, -1,
+                Image.SCALE_SMOOTH);
         iconQuantidade = new ImageIcon(scaledImageQuantidade);
         labelQuantidade.setIcon(iconQuantidade);
         labelQuantidade.setIconTextGap(30);
@@ -122,7 +148,8 @@ public class VendasPainel extends JPanel {
         inputPanel.add(textFieldQuantidade, gbc);
 
         // Descriçoes de Usuario, Data e Hora
-        labelCliente = new JLabel("Nome do(a) Cliente(a): " + obterNomeCliente());
+        labelCliente = new JLabel("Nome do(a) Cliente(a): " + obterNomeCliente(textFieldCpf.getText()));
+
         labelCliente.setFont(font);
         gbc.gridx = 0;
         gbc.gridy = 6;
@@ -131,10 +158,8 @@ public class VendasPainel extends JPanel {
         int paddingLeftCliente = 5;
         int paddingBottomCliente = 5;
         int paddingRightCliente = 5;
-        labelCliente.setBorder(BorderFactory.createCompoundBorder(
-                labelCliente.getBorder(),
-                BorderFactory.createEmptyBorder(paddingTopCliente, paddingLeftCliente, paddingBottomCliente,
-                        paddingRightCliente)));
+        labelCliente.setBorder(BorderFactory.createCompoundBorder(labelCliente.getBorder(), BorderFactory
+                .createEmptyBorder(paddingTopCliente, paddingLeftCliente, paddingBottomCliente, paddingRightCliente)));
         inputPanel.add(labelCliente, gbc);
 
         // Descriçoes de Usuario, Data e Hora
@@ -147,8 +172,7 @@ public class VendasPainel extends JPanel {
         int paddingLeft = 5;
         int paddingBottom = 5;
         int paddingRight = 5;
-        labelOperador.setBorder(BorderFactory.createCompoundBorder(
-                labelOperador.getBorder(),
+        labelOperador.setBorder(BorderFactory.createCompoundBorder(labelOperador.getBorder(),
                 BorderFactory.createEmptyBorder(paddingTop, paddingLeft, paddingBottom, paddingRight)));
         inputPanel.add(labelOperador, gbc);
 
@@ -161,23 +185,26 @@ public class VendasPainel extends JPanel {
         int paddingLeftData = 5;
         int paddingBottomData = 5;
         int paddingRightData = 5;
-        labelOperador.setBorder(BorderFactory.createCompoundBorder(
-                labelOperador.getBorder(),
+        labelOperador.setBorder(BorderFactory.createCompoundBorder(labelOperador.getBorder(),
                 BorderFactory.createEmptyBorder(paddingTopData, paddingLeftData, paddingBottomData, paddingRightData)));
 
         inputPanel.add(labelDataHora, gbc);
 
         // Configuração do botaoAdicionar
         botaoAdicionar = new JButton("Adicionar à Carrinho");
-        botaoAdicionar.setBackground(new Color(167, 254, 180)); // Cor verde RGB
+        botaoAdicionar.setBackground(new Color(167, 254, 180)); // Cor
+                                                                // verde
+                                                                // RGB
         botaoAdicionar.setFont(font);
         ImageIcon iconAdicionar = new ImageIcon("guijdbcmercado\\src\\main\\resources\\Icons\\Produto.png");
         Image ImageAdicionar = iconAdicionar.getImage();
-        Image scaledImageAdicionar = ImageAdicionar.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
+        Image scaledImageAdicionar = ImageAdicionar.getScaledInstance(100, -1,
+                Image.SCALE_SMOOTH);
         iconAdicionar = new ImageIcon(scaledImageAdicionar);
         botaoAdicionar.setIconTextGap(30);
         botaoAdicionar.setIcon(iconAdicionar);
-        gbc.gridx = 0; // Coluna 0
+        gbc.gridx = 0; // Coluna
+                       // 0
         gbc.gridy = 9;
         gbc.gridwidth = 2; // Ocupa duas células
 
@@ -374,6 +401,12 @@ public class VendasPainel extends JPanel {
         total.setText("Valor Total: " + String.format("R$ %.2f", valorTotal)); // Adicionado formato para moeda
     }
 
+    // Método para atualizar o rótulo do cliente com base no CPF inserido
+    private void atualizarLabelCliente() {
+        String cpf = textFieldCpf.getText();
+        labelCliente.setText("Nome do(a) Cliente(a): " + obterNomeCliente(cpf));
+    }
+
     private String obterPrecoProduto(String codigoProduto) {
         if ("1".equals(codigoProduto)) {
             return "10.00"; // Preço do Produto A
@@ -402,9 +435,19 @@ public class VendasPainel extends JPanel {
         }
     }
 
-    private String obterNomeCliente() {
+    private String obterNomeCliente(String cpf) {
+        ClientesDAO clientesDAO = new ClientesDAO();
 
-        return "Nome do Cliente";
+        // Chamar o método do DAO para obter o nome do cliente com base no CPF
+        ListaClientes cliente = clientesDAO.obterClientePorCPF(cpf);
+
+        if (cliente != null) {
+            // Retornar o nome do cliente se encontrado no banco de dados
+            return cliente.getNome();
+        } else {
+            // Retornar uma mensagem padrão ou vazio se o cliente não for encontrado
+            return "Cliente não encontrado";
+        }
     }
 
     private String obterNomeOperador(JanelaLogin autenticar) {
