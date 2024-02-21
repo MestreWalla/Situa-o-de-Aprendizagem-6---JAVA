@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import Connection.ConnectionFactory;
 import Connection.VendasDAO;
 import Model.ListaVendas;
-import javafx.event.ActionEvent;
 
 public class VendasControl {
     //
